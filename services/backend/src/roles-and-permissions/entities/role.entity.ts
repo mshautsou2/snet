@@ -3,19 +3,19 @@ import { BaseEntity } from '../../shared/base.entity';
 import { Permission } from './permission.entity';
 
 @Entity()
-@Unique(['name'])
+@Unique(['key'])
 export class Role extends BaseEntity {
   @Column('varchar', { length: 256 })
-  key: string;
+  title: string;
 
   @Column('varchar', { length: 64 })
-  name: string;
+  key: string;
 
   @Column()
   description: string;
 
   // @OneToMany(type => )
-  @ManyToMany((type) => Permission, (permission) => permission.roles)
+  @ManyToMany((type) => Permission)
   @JoinTable()
   permissions: Permission[];
 }

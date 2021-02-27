@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from 'src/shared/base.entity';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '../roles-and-permissions/entities/role.entity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @Column('varchar', { length: 256 })
   username: string;
 
@@ -12,6 +13,7 @@ export class User {
   @Column('varchar', { length: 256 })
   password: string;
 
-  @ManyToOne((type) => Role)
+  @ManyToMany((type) => Role)
+  @JoinTable()
   roles: Role[];
 }

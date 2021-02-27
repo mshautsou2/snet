@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-export class CreatePermissionDTO implements Readonly<CreatePermissionDTO> {
+export class CreateRoleDTO implements Readonly<CreateRoleDTO> {
   @ApiProperty({ required: true })
   @IsString()
   title: string;
@@ -13,4 +13,5 @@ export class CreatePermissionDTO implements Readonly<CreatePermissionDTO> {
   @ApiProperty({ required: false })
   @IsString()
   description: string;
+
 }

@@ -12,9 +12,9 @@ export class PermissionService {
     private permissionRepository: Repository<Permission>,
   ) {}
 
-  async create(permission: CreatePermissionDTO): Promise<CreatePermissionDTO> {
+  async create(permission: CreatePermissionDTO): Promise<Permission> {
     const savedPermission = await this.permissionRepository.save(permission);
-    return this.buildPermissionResponse(savedPermission);
+    return savedPermission;
   }
 
   findAll(): Promise<Permission[]> {
