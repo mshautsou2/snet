@@ -20,11 +20,11 @@ export class PermissionController {
   constructor(private permissionService: PermissionService) {}
 
   @Post()
-  public post(@Body() dto: CreatePermissionDTO) {
+  public create(@Body() dto: CreatePermissionDTO) {
     return this.permissionService.create(dto);
   }
 
-  @Get('/:id')
+  @Get(':id')
   public async getById(@Param() params: FindOneParams) {
     return await this.permissionService.findOne(params.id);
   }

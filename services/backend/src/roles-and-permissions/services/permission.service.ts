@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePermissionDTO } from 'src/roles-and-permissions/dto/create-permission.dto';
 import { Permission } from 'src/roles-and-permissions/entities/permission.entity';
 import { Repository } from 'typeorm';
+import { PermissionsKeys } from '../constants/permissions-keys.constants';
+import { RolesKeys } from '../constants/roles-keys.constants';
 import { UpdatePermissionDTO } from '../dto/update-permission.dto';
 
 @Injectable()
@@ -23,6 +25,14 @@ export class PermissionService {
 
   findOne(id: string): Promise<Permission> {
     return this.permissionRepository.findOne(id);
+  }
+
+  findByKey(key: PermissionsKeys): Promise<Permission> {
+    return this.permissionRepository.findOne({
+      where: {
+        key,
+      }
+    })
   }
 
   async update(id: string, dto: UpdatePermissionDTO): Promise<Permission> {

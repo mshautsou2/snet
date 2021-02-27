@@ -12,3 +12,4 @@ https://www.npmjs.com/package/class-transformer
 https://stackoverflow.com/questions/59547243/create-dtos-bos-and-daos-for-nestjs-rest-api
 10. fix swagger
 11. remove dtos
+12. edit only self categories
