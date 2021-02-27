@@ -10,7 +10,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreatePermissionDTO } from 'src/roles-and-permissions/dto/create-permission.dto';
 import { DeleteOneParams } from '../dto/delete-one.dto';
-import { FindOneParams } from '../dto/find-one.dto copy';
+import { FindOneParams } from '../../shared/dto/find-one.dto';
 import { UpdatePermissionDTO } from '../dto/update-permission.dto';
 import { PermissionService } from '../services/permission.service';
 

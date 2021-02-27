@@ -7,7 +7,9 @@ import { RolesService } from 'src/roles-and-permissions/services/roles.service';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { User } from './user.entity';
-
+import * as bcrypt from 'bcrypt'
+import { UserLoginDTO } from './dto/user-login.dto';
+import { UnprocessableEntityException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
@@ -25,15 +27,50 @@ export class UsersService {
     const mandatoryRole = await this.roleService.findByKey(RolesKeys.User);
     const user = new User();
     Object.assign(user, userDto);
+    const hash = await bcrypt.hash(userDto.password, 10);
+    user.password = hash;
     user.roles = [ mandatoryRole ]
     console.log('trying to save', user)
     return this.userRepository.save(user);
-
   }
 
+  async loginUser(userDto: UserLoginDTO) {
+    const throwDelayedError = (message) => new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(new UnprocessableEntityException(message));
+      }, 3000)
+    })
+
+    let user = await this.findByEmail(userDto.email);
+    let authenticationPassed = false;
+    if (user) {
+      const isMatch = bcrypt.compareSync(userDto.password, user.password)
+      if (isMatch) {
+        authenticationPassed = true;
+      }
+    }
+    if (authenticationPassed) {
+      const userPayload = { id: user.id }
+      const authToken = this.jwtService.sign(userPayload);
+      return {
+        userId: user.id,
+        authToken,
+      }
+    } else {
+      return await throwDelayedError('Username or password is invalid');
+    }
+  }
 
   findOne(id: string): Promise<User> {
     return this.userRepository.findOne(id);
+  }
+
+  findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: {
+        email,
+      }
+    })
   }
 
   async getUserAuth(payload: UserPayload): Promise<User> {
