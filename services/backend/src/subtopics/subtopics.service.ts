@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Message } from 'src/messsages/entities/message.entity';
 import { TopicsService } from 'src/topics/topics.service';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { CreateSubTopicDTO } from './dto/create-sub-topic.dto';
 import { UpdateSubTopicDto } from './dto/update-topic.dto';
 import { SubTopic } from './entities/subtopic.entity';
@@ -42,6 +43,17 @@ export class SubTopicsService {
 
   async findAll() {
     return await this.repository.find();
+  }
+
+  async findMessagesAndComments(subtopicId: string, limit: number): Promise<Message[]> {
+    return await getConnection()
+          .getRepository(Message)
+          .createQueryBuilder('message')
+          .where('message.subtopic.id = :subtopicId', { subtopicId })
+          .leftJoinAndSelect('message.comments', 'comment')
+          .addOrderBy('message.timestamp', 'DESC')
+          .limit(limit)
+          .getMany()
   }
 
   async findOne(id: string) {

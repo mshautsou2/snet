@@ -22,6 +22,7 @@ import { SubTopicsModule } from './subtopics/subtopics.module';
 import { MessagesModule } from './messsages/messages.module';
 import { CommentService } from './comments/comments.service';
 import { CommentsModule } from './comments/comments.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CommentsModule } from './comments/comments.module';
     SubTopicsModule,
     MessagesModule,
     CommentsModule,
+    ChatModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, { provide: 'APP_GUARD', useClass: PermissionsGuard }],
