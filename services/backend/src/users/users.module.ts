@@ -8,12 +8,12 @@ import { UsersService } from './users.service';
 
 @Module({
   imports: [
+    RolesAndPermissionsModule,
+    TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: 'secret',//MOV TO ENV VARIABLES
       signOptions: { expiresIn: '60m'},//FIX
     }),
-    RolesAndPermissionsModule,
-    TypeOrmModule.forFeature([User]),
   ],
   providers: [UsersService],
   exports: [UsersService],

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RolesKeys } from 'src/roles-and-permissions/constants/roles-keys.constants';
-import { UserPayload } from 'src/roles-and-permissions/dto/user.payload';
+import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
 import { RolesService } from 'src/roles-and-permissions/services/roles.service';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';

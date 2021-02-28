@@ -28,10 +28,11 @@ export class RolesAndPermissionsService {
             .add(permissionId)
     }
 
-    async checkPermissions(permissions: PermissionsKeys[], userId: string) {
+    async checkPermissions(userId: string, ...permissions: PermissionsKeys[]) {
         if (!userId) {
             return false;
         }
+        console.log('check permission for ', userId)
         return await getConnection()
         .getRepository(User)
             .createQueryBuilder('user')

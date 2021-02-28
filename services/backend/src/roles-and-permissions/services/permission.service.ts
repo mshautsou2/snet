@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { PermissionsKeys } from '../constants/permissions-keys.constants';
 import { RolesKeys } from '../constants/roles-keys.constants';
 import { UpdatePermissionDTO } from '../dto/update-permission.dto';
+import { UserPayload } from '../models/user.payload';
 
 @Injectable()
 export class PermissionService {

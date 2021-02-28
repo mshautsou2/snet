@@ -13,7 +13,7 @@ export class Category extends BaseEntity {
   description: string;
 
   @ManyToOne(() => User)
-  author: User;
+  owner: User;
 
 }
 

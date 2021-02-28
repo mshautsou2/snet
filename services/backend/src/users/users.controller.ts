@@ -35,9 +35,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  @RequirePermissions(isOwner => isOwner ? [PermissionsKeys.ViewSelfUser] : [PermissionsKeys.ViewAnyUser])
   async getUser(@Param() params: FindOneParams) {
-    console.log(params)
     return 'ok';
   }
 }

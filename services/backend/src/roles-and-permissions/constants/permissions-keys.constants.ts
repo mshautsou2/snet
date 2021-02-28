@@ -3,6 +3,7 @@ export enum PermissionsKeys {
   ViewSelfUser = 'ViewSelfUser',
   ViewAnyUser = 'ViewAnyUser',
   EditCategory = 'EditCategory',
+  EditSelfCategory = 'EditSelfCategory',
   ViewCategory = 'ViewCategory',
   
 }

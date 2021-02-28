@@ -15,8 +15,8 @@ import { Role } from './roles-and-permissions/entities/role.entity';
 import { RolesService } from './roles-and-permissions/services/roles.service';
 import { RolesKeys } from './roles-and-permissions/constants/roles-keys.constants';
 import { RolesAndPermissionsService } from './roles-and-permissions/services/roles-and-permissions.service';
-import { CategoryModule } from './categories/category.module';
-import { CategoryController } from './categories/category.controller';
+import { CategoryModule } from './categories/categories.module';
+import { CategoriesController } from './categories/categories.controller';
 
 @Module({
   imports: [
@@ -79,14 +79,24 @@ export class AppModule {
         description: 'Create or edit category',
         title: 'Create or edit category permission',
       })
-      const role = await this.roleService.findByKey(RolesKeys.User);
+      // const role = await this.roleService.findByKey(RolesKeys.User);
 
-      const editCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.EditCategory);
-      this.rolePermissionService.addPermission(role.id, editCategoryPermissions.id);
-
+      // const editCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.EditCategory);
+      // this.rolePermissionService.addPermission(role.id, editCategoryPermissions.id);
     }
 
-    // console.log(`Initialization...`);
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfCategory,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      const editSelfCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.EditSelfCategory);
+      this.rolePermissionService.addPermission(role.id, editSelfCategoryPermissions.id);
+    }
+
   }
 
 }

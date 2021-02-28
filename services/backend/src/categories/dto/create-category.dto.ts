@@ -12,6 +12,6 @@ export class CreateCategoryDto implements Readonly<CreateCategoryDto> {
     @IsString()
     description: string;
 
-    authorId: string;
+    owner: string;
 
 }

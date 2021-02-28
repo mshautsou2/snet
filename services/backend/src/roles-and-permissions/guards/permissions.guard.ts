@@ -14,24 +14,15 @@ export class PermissionsGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user: User = request.user;
     console.log('user', user)
-    // const permissionGranted = await this.
-    
-    
 
-    const permissionFunc = this.reflector.getAllAndOverride<(isOwner) => PermissionsKeys[]>(REQUIRE_PERMISSIONS_KEY, [
+    const requiredPermissions = this.reflector.getAllAndOverride<PermissionsKeys[]>(REQUIRE_PERMISSIONS_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (!permissionFunc) {
+    if (!requiredPermissions || requiredPermissions.length === 0) {
       return true;
     }
-    const requiredPermissions = permissionFunc(user.id === request.params.id);
-    console.log('user id', user.id)
-    console.log('request params', request.params)
-    console.log('required permisions keys', permissionFunc(user.id === request.params.id))
-      console.log('finding perission in databse...');
-      console.log('checking acces for ', user)
-    const accessGranted = this.rolesAndPermissionsService.checkPermissions(requiredPermissions, user.id)
+    const accessGranted = this.rolesAndPermissionsService.checkPermissions(user.id, ...requiredPermissions)
     return accessGranted;
   }
 }
