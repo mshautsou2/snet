@@ -10,6 +10,7 @@ import { MessageService } from './messages.service';
 @Module({
   imports: [TypeOrmModule.forFeature([ Message ]), RolesAndPermissionsModule, UsersModule, SubTopicsModule],
   controllers: [MessagesController],
-  providers: [MessageService]
+  providers: [MessageService],
+  exports: [MessageService],
 })
 export class MessagesModule {}

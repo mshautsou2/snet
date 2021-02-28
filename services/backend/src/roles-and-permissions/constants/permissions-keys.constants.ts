@@ -18,4 +18,8 @@ export enum PermissionsKeys {
   EditAnyMessage = 'EditAnyMessage',
   EditSelfMessage = 'EditSelfMessage',
 
+  ViewComment = 'ViewComment',
+  EditAnyComment = 'EditAnyComment',
+  EditSelfComment = 'EditSelfComment',
+
 }
