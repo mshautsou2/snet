@@ -3,13 +3,30 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as csurf from 'csurf';
+import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const config = app.get<ConfigService>(ConfigService);
 
-  if (config.get('NODE_ENV') === 'development') {
+  const DEV_ENVIRONMENT = config.get('NODE_ENV') === 'development';
+
+  const csrfProtection = true // Is it needed? https://stackoverflow.com/questions/45945951/jwt-and-csrf-differences
+  if (!DEV_ENVIRONMENT && csrfProtection) {
+    app.use(
+      session({
+        secret: 'my-secret', //TODO: should be moved to environment variables
+        resave: false,
+        saveUninitialized: false,
+      }),
+    );
+  
+    app.use(csurf())
+  }
+
+
+  if (DEV_ENVIRONMENT) {
     const document = SwaggerModule.createDocument(
       app,
       new DocumentBuilder()
