@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessageService } from 'src/messsages/messages.service';
-import { SubTopicsService } from 'src/subtopics/subtopics.service';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateCommentDTO } from './dto/create-comment.dto';

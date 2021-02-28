@@ -1,11 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePermissionDTO } from 'src/roles-and-permissions/dto/create-permission.dto';
-import { Permission } from 'src/roles-and-permissions/entities/permission.entity';
 import { Repository } from 'typeorm';
 import { RolesKeys } from '../constants/roles-keys.constants';
 import { CreateRoleDTO } from '../dto/create-role.dto';
-import { UpdatePermissionDTO } from '../dto/update-permission.dto';
 import { UpdateRoleDTO } from '../dto/update-role.dto';
 import { Role } from '../entities/role.entity';
 
@@ -14,7 +11,7 @@ export class RolesService {
   constructor(
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
-  ) {}
+  ) { }
 
   async create(role: CreateRoleDTO): Promise<Role> {
     const savedRole = await this.roleRepository.save(role);
@@ -32,7 +29,7 @@ export class RolesService {
       }
     })
   }
-  
+
   async update(id: string, dto: UpdateRoleDTO): Promise<Role> {
     const toUpdate = await this.roleRepository.findOne({ id: id });
     if (!toUpdate) {
@@ -43,36 +40,36 @@ export class RolesService {
 
 
 
-//   findAll(): Promise<Permission[]> {
-//     return this.permissionRepository.find();
-//   }
+  //   findAll(): Promise<Permission[]> {
+  //     return this.permissionRepository.find();
+  //   }
 
-//   findOne(id: string): Promise<Permission> {
-//     return this.permissionRepository.findOne(id);
-//   }
+  //   findOne(id: string): Promise<Permission> {
+  //     return this.permissionRepository.findOne(id);
+  //   }
 
-//   async update(id: string, dto: UpdatePermissionDTO): Promise<Permission> {
-//     const toUpdate = await this.permissionRepository.findOne({ id: id });
-//     if (!toUpdate) {
-//       throw new NotFoundException(`Permission with id "${dto.id}" not found`);
-//     }
-//     return await this.permissionRepository.save(dto);
-//   }
+  //   async update(id: string, dto: UpdatePermissionDTO): Promise<Permission> {
+  //     const toUpdate = await this.permissionRepository.findOne({ id: id });
+  //     if (!toUpdate) {
+  //       throw new NotFoundException(`Permission with id "${dto.id}" not found`);
+  //     }
+  //     return await this.permissionRepository.save(dto);
+  //   }
 
-//   async remove(id: string): Promise<void> {
-//     if (!id) {
-//       throw new NotFoundException(`Permission ID does not exists`);
-//     }
-//     const toDelete = await this.permissionRepository.delete(id);
-//     if (toDelete.affected === 0) {
-//       throw new NotFoundException(`Permission with id "${id}" not found`);
-//     }
-//   }
+  //   async remove(id: string): Promise<void> {
+  //     if (!id) {
+  //       throw new NotFoundException(`Permission ID does not exists`);
+  //     }
+  //     const toDelete = await this.permissionRepository.delete(id);
+  //     if (toDelete.affected === 0) {
+  //       throw new NotFoundException(`Permission with id "${id}" not found`);
+  //     }
+  //   }
 
-//   private buildPermissionResponse(permission: Permission) {
-//     return {
-//       id: permission.id,
-//       title: permission.title,
-//     };
-//   }
+  //   private buildPermissionResponse(permission: Permission) {
+  //     return {
+  //       id: permission.id,
+  //       title: permission.title,
+  //     };
+  //   }
 }

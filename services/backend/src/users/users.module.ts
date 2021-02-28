@@ -12,7 +12,7 @@ import { UsersService } from './users.service';
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: 'secret',//MOV TO ENV VARIABLES
-      signOptions: { expiresIn: '60m'},//FIX
+      signOptions: { expiresIn: '1m' },
     }),
   ],
   providers: [UsersService],
@@ -22,7 +22,7 @@ export class UsersModule {
 
   constructor(
     private userService: UsersService,
-  ) {}
+  ) { }
 
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(UserMiddleware).forRoutes('*')

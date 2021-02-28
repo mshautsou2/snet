@@ -2,9 +2,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
 import * as csurf from 'csurf';
 import * as session from 'express-session';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,7 +21,7 @@ async function bootstrap() {
         saveUninitialized: false,
       }),
     );
-  
+
     app.use(csurf())
   }
 
@@ -30,8 +30,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(
       app,
       new DocumentBuilder()
-        .setTitle('Ietm API')
-        .setDescription('My Item API')
+        .setTitle('SNet Documetation')
         .build(),
     );
     SwaggerModule.setup('docs', app, document);

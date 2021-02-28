@@ -12,7 +12,7 @@ import { MessageService } from './messages.service';
 @Controller('messages')
 @ApiTags('messages')
 export class MessagesController {
-  constructor(private readonly messagesService: MessageService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
+  constructor(private readonly messagesService: MessageService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
   async create(@Body() createMessageDTO: CreateMessageDTO, @ExtractUser() user) {

@@ -14,9 +14,9 @@ export class Topic extends BaseEntity {
   @Column()
   description: string;
 
-  @ManyToOne(() => Category, { onDelete: 'CASCADE'})
+  @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   category: Category;
-  
+
   @OneToMany(() => SubTopic, (t: SubTopic) => t.topic)
   subtopics: SubTopic[];
 

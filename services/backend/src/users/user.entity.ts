@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/shared/entitiy/base.entity';
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, Unique } from 'typeorm';
 import { Role } from '../roles-and-permissions/entities/role.entity';
 
 @Entity()
@@ -19,7 +19,7 @@ export class User extends BaseEntity {
   roles: Role[];
 
   toSanitizedEntity(): Omit<User, 'password'> {
-    const { password, ...sanitizedUser} = this;
+    const { password, ...sanitizedUser } = this;
     return sanitizedUser;
   }
 }

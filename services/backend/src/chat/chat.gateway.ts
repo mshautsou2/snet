@@ -1,42 +1,42 @@
+import { HttpException } from '@nestjs/common';
 import {
-    WebSocketGateway,
-    SubscribeMessage,
-    WsResponse,
-    WebSocketServer,
     OnGatewayConnection,
-    OnGatewayDisconnect,
-    WsException,
-} from '@nestjs/websockets';
+    OnGatewayDisconnect, SubscribeMessage, WebSocketGateway,
 
-import { Server, Socket } from 'socket.io'
+
+    WebSocketServer,
+
+
+    WsException
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
+import { MessageDTO } from 'src/chat/dto/message.dto';
+import { CommentService } from 'src/comments/comments.service';
+import { MessageService } from 'src/messsages/messages.service';
 import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
 import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
 import { SubTopicsService } from 'src/subtopics/subtopics.service';
-import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { ChatUser } from './chat-user.model';
 import { SubtopicAction } from './dto/subtopic-action.dto';
-import { MessageDTO } from 'src/chat/dto/message.dto'
-import { MessageService } from 'src/messsages/messages.service';
-import { CommentService } from 'src/comments/comments.service';
-import { HttpException } from '@nestjs/common';
 
-@WebSocketGateway(3001, { namespace: 'chats'})
+
+@WebSocketGateway(3001, { namespace: 'chats' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer()
     server: Server;
 
     connectedUsers: ChatUser[] = []//can be moved to database
- 
+
     constructor(
         private readonly roleAndPermissionService: RolesAndPermissionsService,
         private readonly userService: UsersService,
         private readonly subtopicService: SubTopicsService,
         private readonly messageService: MessageService,
         private readonly commentService: CommentService,
-    ) {}
+    ) { }
 
     async handleConnection(socket: Socket) {
         const userPayload: UserPayload = await this.userService.decodeAuthToken(socket.handshake.query.token)
@@ -58,7 +58,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     async handleDisconnect(socket: Socket) {
-        console.log('here')
+        ('here')
         const userPayload: UserPayload = await this.userService.decodeAuthToken(socket.handshake.query.token)
         if (!userPayload) {
             throw new WsException('Unauthorized access')
@@ -71,7 +71,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage('join')
     async onSubtopicJoin(client, data: SubtopicAction) {
-        console.log('joining')
         client.join(data.subtopicId)
 
         const messages = await this.subtopicService.findMessagesAndComments(data.subtopicId, 25);
@@ -85,7 +84,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage('message')
     async onMessage(client: Socket, data: MessageDTO) {
-        console.log(data)
         const user = this.connectedUsers.find(u => u.socketId === client.id)
         const canLeaveMessage = !user.readOnly
         if (!canLeaveMessage) {
@@ -109,5 +107,5 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
 
-    
+
 }

@@ -47,13 +47,13 @@ export class SubTopicsService {
 
   async findMessagesAndComments(subtopicId: string, limit: number): Promise<Message[]> {
     return await getConnection()
-          .getRepository(Message)
-          .createQueryBuilder('message')
-          .where('message.subtopic.id = :subtopicId', { subtopicId })
-          .leftJoinAndSelect('message.comments', 'comment')
-          .addOrderBy('message.timestamp', 'DESC')
-          .limit(limit)
-          .getMany()
+      .getRepository(Message)
+      .createQueryBuilder('message')
+      .where('message.subtopic.id = :subtopicId', { subtopicId })
+      .leftJoinAndSelect('message.comments', 'comment')
+      .addOrderBy('message.timestamp', 'DESC')
+      .limit(limit)
+      .getMany()
   }
 
   async findOne(id: string) {

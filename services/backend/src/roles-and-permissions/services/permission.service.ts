@@ -4,16 +4,14 @@ import { CreatePermissionDTO } from 'src/roles-and-permissions/dto/create-permis
 import { Permission } from 'src/roles-and-permissions/entities/permission.entity';
 import { Repository } from 'typeorm';
 import { PermissionsKeys } from '../constants/permissions-keys.constants';
-import { RolesKeys } from '../constants/roles-keys.constants';
 import { UpdatePermissionDTO } from '../dto/update-permission.dto';
-import { UserPayload } from '../models/user.payload';
 
 @Injectable()
 export class PermissionService {
   constructor(
     @InjectRepository(Permission)
     private permissionRepository: Repository<Permission>,
-  ) {}
+  ) { }
 
   async create(permission: CreatePermissionDTO): Promise<Permission> {
     const savedPermission = await this.permissionRepository.save(permission);

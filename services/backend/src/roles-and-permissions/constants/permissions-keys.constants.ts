@@ -9,11 +9,11 @@ export enum PermissionsKeys {
   ViewTopic = 'ViewTopic',
   EditAnyTopic = 'EditAnyTopic',
   EditSelfTopic = 'EditSelfTopic',
-  
+
   ViewSubTopic = 'ViewSubTopic',
   EditAnySubTopic = 'EditAnySubtopic',
   EditSelfSubTopic = 'EditSelfSubtopic',
-  
+
   ViewMessage = 'ViewMessages',
   EditAnyMessage = 'EditAnyMessage',
   EditSelfMessage = 'EditSelfMessage',

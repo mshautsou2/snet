@@ -4,5 +4,5 @@ export class SubtopicAction implements Readonly<SubtopicAction> {
 
     @IsUUID()
     subtopicId: string;
-  
+
 }

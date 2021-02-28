@@ -4,15 +4,15 @@ import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
 import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
 import { ExtractUser } from 'src/users/user.decorator';
-import { CreateCommentDTO } from './dto/create-comment.dto';
-import { CommentResponseDTO } from './dto/comment-response.dto';
-import { UpdateCommentDTO } from './dto/update-comment.dto';
 import { CommentService } from './comments.service';
+import { CommentResponseDTO } from './dto/comment-response.dto';
+import { CreateCommentDTO } from './dto/create-comment.dto';
+import { UpdateCommentDTO } from './dto/update-comment.dto';
 
 @Controller('comments')
 @ApiTags('comments')
 export class CommentsController {
-  constructor(private readonly commentsService: CommentService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
+  constructor(private readonly commentsService: CommentService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
   async create(@Body() createCommentDTO: CreateCommentDTO, @ExtractUser() user) {

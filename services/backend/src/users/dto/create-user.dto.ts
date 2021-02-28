@@ -6,11 +6,11 @@ export class CreateUserDTO implements Readonly<CreateUserDTO> {
   @IsString()
   username: string;
 
-  @ApiProperty({ required: true})
+  @ApiProperty({ required: true })
   @IsEmail()
   email: string;
 
-  @ApiProperty({ required: true})
+  @ApiProperty({ required: true })
   @IsString()
   password: string;
 }

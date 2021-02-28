@@ -7,7 +7,7 @@ export class CreateTopicDto implements Readonly<CreateTopicDto> {
     @ApiProperty({ required: true })
     @IsString()
     name: string;
-  
+
     @ApiProperty({ required: true })
     @IsString()
     description: string;

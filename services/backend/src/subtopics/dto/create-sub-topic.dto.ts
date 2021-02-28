@@ -7,7 +7,7 @@ export class CreateSubTopicDTO implements Readonly<CreateSubTopicDTO> {
     @ApiProperty({ required: true })
     @IsString()
     name: string;
-  
+
     @ApiProperty({ required: true })
     @IsString()
     description: string;

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Permission } from 'src/roles-and-permissions/entities/permission.entity';
-import { PermissionService } from './services/permission.service';
 import { PermissionController } from './controllers/permission.controller';
 import { Role } from './entities/role.entity';
-import { RolesService } from './services/roles.service';
+import { PermissionService } from './services/permission.service';
 import { RolesAndPermissionsService } from './services/roles-and-permissions.service';
+import { RolesService } from './services/roles.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Permission, Role])],
@@ -13,4 +13,4 @@ import { RolesAndPermissionsService } from './services/roles-and-permissions.ser
   exports: [PermissionService, RolesService, RolesAndPermissionsService],
   controllers: [PermissionController],
 })
-export class RolesAndPermissionsModule {}
+export class RolesAndPermissionsModule { }

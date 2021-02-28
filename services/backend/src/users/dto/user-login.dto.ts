@@ -6,7 +6,7 @@ export class UserLoginDTO implements Readonly<UserLoginDTO> {
   @IsEmail()
   email: string;
 
-  @ApiProperty({ required: true})
+  @ApiProperty({ required: true })
   @IsString()
   password: string;
 }

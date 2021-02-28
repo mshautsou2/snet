@@ -1,7 +1,7 @@
 import { BaseEntity } from "src/shared/entitiy/base.entity";
 import { Topic } from "src/topics/entities/topic.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
 
 @Entity({ name: 'category' })
@@ -12,7 +12,7 @@ export class Category extends BaseEntity {
 
   @Column()
   description: string;
-  
+
   @OneToMany(() => Topic, (t: Topic) => t.category)
   topics: Topic[];
 

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { SubTopicsService } from './subtopics.service';
-import { SubTopicsController } from './subtopics.controller';
-import { UsersModule } from 'src/users/users.module';
-import { SubTopic } from './entities/subtopic.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesAndPermissionsModule } from 'src/roles-and-permissions/roles-and-permissions.module';
 import { TopicsModule } from 'src/topics/topics.module';
+import { UsersModule } from 'src/users/users.module';
+import { SubTopic } from './entities/subtopic.entity';
+import { SubTopicsController } from './subtopics.controller';
+import { SubTopicsService } from './subtopics.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ SubTopic ]), RolesAndPermissionsModule, UsersModule, TopicsModule],
+  imports: [TypeOrmModule.forFeature([SubTopic]), RolesAndPermissionsModule, UsersModule, TopicsModule],
   controllers: [SubTopicsController],
   providers: [SubTopicsService],
   exports: [SubTopicsService],
 })
-export class SubTopicsModule {}
+export class SubTopicsModule { }

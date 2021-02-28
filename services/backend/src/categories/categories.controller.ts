@@ -1,13 +1,10 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
 import { RequirePermissions } from 'src/roles-and-permissions/decorators/permission.decorator';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
-import { PermissionService } from 'src/roles-and-permissions/services/permission.service';
 import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
-import { FindOneParams } from 'src/shared/dto/find-one.dto';
 import { ExtractUser } from 'src/users/user.decorator';
-import { User } from 'src/users/user.entity';
 import { CategoryService as CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -15,10 +12,10 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @Controller('categories')
 @ApiTags('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
+  constructor(private readonly categoriesService: CategoriesService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
-  async create(@ExtractUser() user: UserPayload,@Body() createCategoryDto: CreateCategoryDto) {
+  async create(@ExtractUser() user: UserPayload, @Body() createCategoryDto: CreateCategoryDto) {
     const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
     if (accessGranted) {
       throw new UnauthorizedException("You do not have permissions to create categories");

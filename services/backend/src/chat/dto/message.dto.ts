@@ -8,7 +8,7 @@ export class MessageDTO implements Readonly<MessageDTO> {
     @IsUUID()
     @IsOptional()
     replyTo: string
-  
+
     @IsUUID()
     subtopicId: string;
 }

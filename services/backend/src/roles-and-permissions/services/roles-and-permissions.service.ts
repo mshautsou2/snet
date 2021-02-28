@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Permission } from "../entities/permission.entity";
+import { User } from "src/users/user.entity";
+import { getConnection } from "typeorm";
+import { PermissionsKeys } from "../constants/permissions-keys.constants";
 import { Role } from "../entities/role.entity";
 import { PermissionService } from "./permission.service";
 import { RolesService } from "./roles.service";
-import { getConnection } from "typeorm";
-import { User } from "src/users/user.entity";
-import { PermissionsKeys } from "../constants/permissions-keys.constants";
 
 @Injectable()
 export class RolesAndPermissionsService {
@@ -32,9 +30,8 @@ export class RolesAndPermissionsService {
         if (!userId) {
             return false;
         }
-        console.log('check permission for ', userId)
         return await getConnection()
-        .getRepository(User)
+            .getRepository(User)
             .createQueryBuilder('user')
             .where('user.id = :userId', { userId })
             .leftJoin('user.roles', 'role')

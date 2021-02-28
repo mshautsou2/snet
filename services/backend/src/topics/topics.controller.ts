@@ -1,18 +1,18 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, UnauthorizedException } from '@nestjs/common';
-import { TopicsService } from './topics.service';
-import { CreateTopicDto } from './dto/create-topic.dto';
-import { UpdateTopicDto } from './dto/update-topic.dto';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
-import { ExtractUser } from 'src/users/user.decorator';
 import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
+import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
+import { ExtractUser } from 'src/users/user.decorator';
+import { CreateTopicDto } from './dto/create-topic.dto';
 import { TopicResponseDTO } from './dto/topic-response.dto';
+import { UpdateTopicDto } from './dto/update-topic.dto';
+import { TopicsService } from './topics.service';
 
 @Controller('topics')
 @ApiTags('topics')
 export class TopicsController {
-  constructor(private readonly topicsService: TopicsService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
+  constructor(private readonly topicsService: TopicsService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
   async create(@Body() createTopicDto: CreateTopicDto, @ExtractUser() user) {
@@ -27,9 +27,6 @@ export class TopicsController {
   @Get()
   async findAll(@ExtractUser() user) {
     const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.ViewTopic);
-    console.log('user', user)
-    console.log('access granted', accessGranted);
-    
     if (!accessGranted) {
       throw new UnauthorizedException("You do not have permissions to view topics");
     }
@@ -51,7 +48,6 @@ export class TopicsController {
     let accessGranted = false;
     const entityOwner = await this.topicsService.isOwner(user.id, id);
 
-    console.log('entity owner', entityOwner)
     if (entityOwner) {
       accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfTopic);
     } else {

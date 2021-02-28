@@ -9,7 +9,7 @@ export class SubTopicResponseDTO implements Readonly<SubTopicResponseDTO> {
     @ApiProperty({ required: true })
     @IsString()
     name: string;
-  
+
     @ApiProperty({ required: true })
     @IsString()
     description: string;

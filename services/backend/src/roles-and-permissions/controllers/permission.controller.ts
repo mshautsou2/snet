@@ -5,19 +5,19 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreatePermissionDTO } from 'src/roles-and-permissions/dto/create-permission.dto';
-import { DeleteOneParams } from '../dto/delete-one.dto';
 import { FindOneParams } from '../../shared/dto/find-one.dto';
+import { DeleteOneParams } from '../dto/delete-one.dto';
 import { UpdatePermissionDTO } from '../dto/update-permission.dto';
 import { PermissionService } from '../services/permission.service';
 
 @Controller('permissions')
 @ApiTags('permissions')
 export class PermissionController {
-  constructor(private permissionService: PermissionService) {}
+  constructor(private permissionService: PermissionService) { }
 
   @Post()
   public create(@Body() dto: CreatePermissionDTO) {

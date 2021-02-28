@@ -1,4 +1,3 @@
-import { PermissionsKeys } from '../constants/permissions-keys.constants';
 import { SetMetadata } from '@nestjs/common';
 
 export const PUBLIC_ACCESS_KEY = 'public_access';

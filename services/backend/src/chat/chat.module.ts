@@ -21,8 +21,7 @@ import { ChatGateway } from './chat.gateway';
 
 
 @Module({
-    imports: [RolesAndPermissionsModule, UsersModule, SubTopicsModule, MessagesModule, CommentsModule ],
-    providers: [ChatGateway],
-  })
-  export class ChatModule {}
-  
+  imports: [RolesAndPermissionsModule, UsersModule, SubTopicsModule, MessagesModule, CommentsModule],
+  providers: [ChatGateway],
+})
+export class ChatModule { }

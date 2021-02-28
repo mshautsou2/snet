@@ -8,9 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesAndPermissionsModule } from 'src/roles-and-permissions/roles-and-permissions.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ Topic ]), RolesAndPermissionsModule, UsersModule, CategoryModule],
+  imports: [TypeOrmModule.forFeature([Topic]), RolesAndPermissionsModule, UsersModule, CategoryModule],
   controllers: [TopicsController],
   providers: [TopicsService],
   exports: [TopicsService],
 })
-export class TopicsModule {}
+export class TopicsModule { }

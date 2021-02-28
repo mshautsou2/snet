@@ -13,7 +13,6 @@ export class PermissionsGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const user: User = request.user;
-    console.log('user', user)
 
     const requiredPermissions = this.reflector.getAllAndOverride<PermissionsKeys[]>(REQUIRE_PERMISSIONS_KEY, [
       context.getHandler(),

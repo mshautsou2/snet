@@ -1,18 +1,18 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, UnauthorizedException } from '@nestjs/common';
-import { SubTopicsService } from './subtopics.service';
-import { CreateSubTopicDTO } from './dto/create-sub-topic.dto';
-import { UpdateSubTopicDto } from './dto/update-topic.dto';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
-import { ExtractUser } from 'src/users/user.decorator';
 import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
+import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
+import { ExtractUser } from 'src/users/user.decorator';
+import { CreateSubTopicDTO } from './dto/create-sub-topic.dto';
 import { SubTopicResponseDTO } from './dto/subtopic-response.dto';
+import { UpdateSubTopicDto } from './dto/update-topic.dto';
+import { SubTopicsService } from './subtopics.service';
 
 @Controller('subtopics')
 @ApiTags('subtopics')
 export class SubTopicsController {
-  constructor(private readonly subtopicsService: SubTopicsService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
+  constructor(private readonly subtopicsService: SubTopicsService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
   async create(@Body() createSubTopicDto: CreateSubTopicDTO, @ExtractUser() user) {
@@ -48,7 +48,6 @@ export class SubTopicsController {
     let accessGranted = false;
     const entityOwner = await this.subtopicsService.isOwner(user.id, id);
 
-    console.log('entity owner', entityOwner)
     if (entityOwner) {
       accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfSubTopic);
     } else {

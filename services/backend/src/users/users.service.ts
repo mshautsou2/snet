@@ -1,15 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { RolesKeys } from 'src/roles-and-permissions/constants/roles-keys.constants';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
 import { RolesService } from 'src/roles-and-permissions/services/roles.service';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { User } from './user.entity';
-import * as bcrypt from 'bcrypt'
 import { UserLoginDTO } from './dto/user-login.dto';
-import { UnprocessableEntityException } from '@nestjs/common';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
@@ -23,14 +22,13 @@ export class UsersService {
 
   }
 
-  async create(userDto: CreateUserDTO) { 
+  async create(userDto: CreateUserDTO) {
     const mandatoryRole = await this.roleService.findByKey(RolesKeys.User);
     const user = new User();
     Object.assign(user, userDto);
     const hash = await bcrypt.hash(userDto.password, 10);
     user.password = hash;
-    user.roles = [ mandatoryRole ]
-    console.log('trying to save', user)
+    user.roles = [mandatoryRole]
     return this.userRepository.save(user);
   }
 

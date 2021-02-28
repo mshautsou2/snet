@@ -1,4 +1,4 @@
-import { Entity, Column, Unique, ManyToMany, JoinTable } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, Unique } from 'typeorm';
 import { BaseEntity } from '../../shared/entitiy/base.entity';
 import { Permission } from './permission.entity';
 
@@ -14,7 +14,6 @@ export class Role extends BaseEntity {
   @Column()
   description: string;
 
-  // @OneToMany(type => )
   @ManyToMany((type) => Permission)
   @JoinTable()
   permissions: Permission[];
