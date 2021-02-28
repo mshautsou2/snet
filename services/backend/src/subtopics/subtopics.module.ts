@@ -10,6 +10,7 @@ import { TopicsModule } from 'src/topics/topics.module';
 @Module({
   imports: [TypeOrmModule.forFeature([ SubTopic ]), RolesAndPermissionsModule, UsersModule, TopicsModule],
   controllers: [SubTopicsController],
-  providers: [SubTopicsService]
+  providers: [SubTopicsService],
+  exports: [SubTopicsService],
 })
 export class SubTopicsModule {}

@@ -19,6 +19,7 @@ import { CategoryModule } from './categories/categories.module';
 import { CategoriesController } from './categories/categories.controller';
 import { TopicsModule } from './topics/topics.module';
 import { SubTopicsModule } from './subtopics/subtopics.module';
+import { MessagesModule } from './messsages/messages.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { SubTopicsModule } from './subtopics/subtopics.module';
     CategoryModule,
     TopicsModule,
     SubTopicsModule,
+    MessagesModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, { provide: 'APP_GUARD', useClass: PermissionsGuard }],
@@ -159,6 +161,38 @@ export class AppModule {
       const role = await this.roleService.findByKey(RolesKeys.User);
 
       this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+
+
+
+
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfMessage,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+        
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewMessage,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+      
     }
 
   }

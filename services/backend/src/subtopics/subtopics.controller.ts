@@ -16,7 +16,7 @@ export class SubTopicsController {
 
   @Post()
   async create(@Body() createSubTopicDto: CreateSubTopicDTO, @ExtractUser() user) {
-    const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfTopic);
+    const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfSubTopic);
     if (!accessGranted) {
       throw new UnauthorizedException("You do not have permissions to create sub topics");
     }

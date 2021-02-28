@@ -45,7 +45,15 @@ export class TopicsService {
   }
 
   async findOne(id: string) {
-    return await this.repository.findOne(id);
+    return await this.repository.findOne(id, {
+      join: {
+        alias: 'topics',
+        leftJoinAndSelect: {
+          subtopics: 'topics.subtopics',
+        },
+
+      }
+    });
   }
 
   async update(id: string, updateTopicDto: UpdateTopicDto) {
