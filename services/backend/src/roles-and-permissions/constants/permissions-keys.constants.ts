@@ -10,5 +10,8 @@ export enum PermissionsKeys {
   EditAnyTopic = 'EditAnyTopic',
   EditSelfTopic = 'EditSelfTopic',
   
+  ViewSubTopic = 'ViewSubTopic',
+  EditAnySubTopic = 'EditAnySubtopic',
+  EditSelfSubTopic = 'EditSelfSubtopic',
   
 }

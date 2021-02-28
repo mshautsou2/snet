@@ -18,6 +18,7 @@ import { RolesAndPermissionsService } from './roles-and-permissions/services/rol
 import { CategoryModule } from './categories/categories.module';
 import { CategoriesController } from './categories/categories.controller';
 import { TopicsModule } from './topics/topics.module';
+import { SubTopicsModule } from './subtopics/subtopics.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TopicsModule } from './topics/topics.module';
     UsersModule,
     CategoryModule,
     TopicsModule,
+    SubTopicsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, { provide: 'APP_GUARD', useClass: PermissionsGuard }],
@@ -111,20 +113,46 @@ export class AppModule {
       this.rolePermissionService.addPermission(role.id, permission.id);
       
     }
-    if (0) {
-      const permission = await this.permissionService.create({
-        key: PermissionsKeys.EditAnyTopic,
-        description: 'Edit or delete own categories',
-        title: 'Create or edit category permission',
-      })
-      const role = await this.roleService.findByKey(RolesKeys.Admin);
+    // if (0) {
+    //   const permission = await this.permissionService.create({
+    //     key: PermissionsKeys.EditAnyTopic,
+    //     description: 'Edit or delete own categories',
+    //     title: 'Create or edit category permission',
+    //   })
+    //   const role = await this.roleService.findByKey(RolesKeys.Admin);
 
-      this.rolePermissionService.addPermission(role.id, permission.id);
-    }
+    //   this.rolePermissionService.addPermission(role.id, permission.id);
+    // }
 
     if (0) {
       const permission = await this.permissionService.create({
         key: PermissionsKeys.EditSelfTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+        
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewSubTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+      
+    }
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfSubTopic,
         description: 'Edit or delete own categories',
         title: 'Create or edit category permission',
       })
