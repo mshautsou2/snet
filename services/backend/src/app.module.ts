@@ -17,6 +17,7 @@ import { RolesKeys } from './roles-and-permissions/constants/roles-keys.constant
 import { RolesAndPermissionsService } from './roles-and-permissions/services/roles-and-permissions.service';
 import { CategoryModule } from './categories/categories.module';
 import { CategoriesController } from './categories/categories.controller';
+import { TopicsModule } from './topics/topics.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CategoriesController } from './categories/categories.controller';
     RolesAndPermissionsModule,
     UsersModule,
     CategoryModule,
+    TopicsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, { provide: 'APP_GUARD', useClass: PermissionsGuard }],
@@ -95,6 +97,40 @@ export class AppModule {
 
       const editSelfCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.EditSelfCategory);
       this.rolePermissionService.addPermission(role.id, editSelfCategoryPermissions.id);
+    }
+
+    
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+      
+    }
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditAnyTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.Admin);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
     }
 
   }

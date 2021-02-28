@@ -14,3 +14,4 @@ https://stackoverflow.com/questions/59547243/create-dtos-bos-and-daos-for-nestjs
 11. remove dtos
 12. edit only self categories
 13. fix imports
+14. rename register to sign up

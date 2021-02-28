@@ -37,7 +37,15 @@ export class CategoryService {
   }
 
   async findOne(id: string) {
-    return await this.categoryRepository.findOne(id);
+    return await this.categoryRepository.findOne(id, {
+      join: {
+        alias: 'categories',
+        leftJoinAndSelect: {
+          topcis: 'categories.topics',
+        },
+
+      }
+    });
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {

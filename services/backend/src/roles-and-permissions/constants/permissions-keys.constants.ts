@@ -5,5 +5,10 @@ export enum PermissionsKeys {
   EditCategory = 'EditCategory',
   EditSelfCategory = 'EditSelfCategory',
   ViewCategory = 'ViewCategory',
+
+  ViewTopic = 'ViewTopic',
+  EditAnyTopic = 'EditAnyTopic',
+  EditSelfTopic = 'EditSelfTopic',
+  
   
 }

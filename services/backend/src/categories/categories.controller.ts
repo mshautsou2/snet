@@ -18,11 +18,9 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService, private readonly rolesPermissionService: RolesAndPermissionsService) {}
 
   @Post()
-  create(@ExtractUser() user: UserPayload,@Body() createCategoryDto: CreateCategoryDto) {
-    console.log('user', user)
-    
-    const accessGranted = this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
-    if (!accessGranted) {
+  async create(@ExtractUser() user: UserPayload,@Body() createCategoryDto: CreateCategoryDto) {
+    const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
+    if (accessGranted) {
       throw new UnauthorizedException("You do not have permissions to create categories");
     }
     createCategoryDto.owner = user.id;
@@ -70,7 +68,7 @@ export class CategoriesController {
     if (entityOwner) {
       accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfCategory);
     } else {
-      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
+      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfCategory);
     }
     if (!accessGranted) {
       throw new UnauthorizedException("You do not have permissions to delete this category");
