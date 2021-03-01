@@ -1,0 +1,164 @@
+
+  async onModuleInit() {
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.AddUser,
+        description: 'Add new user',
+        title: 'add new user permission',
+      })
+      const role = await this.roleService.create({
+        key: RolesKeys.User,
+        title: 'Regular User',
+        description: 'regular user role'
+      })
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+    if (0) {
+      await this.roleService.create({
+        key: RolesKeys.Anonymous,
+        title: 'Anonymous User',
+        description: 'Unauthenticated user'
+      })
+    }
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewCategory,
+        description: 'View any category',
+        title: 'view any category',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      const viewCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.ViewCategory);
+      this.rolePermissionService.addPermission(role.id, viewCategoryPermissions.id);
+
+    }
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditCategory,
+        description: 'Create or edit category',
+        title: 'Create or edit category permission',
+      })
+    }
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfCategory,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      const editSelfCategoryPermissions = await this.permissionService.findByKey(PermissionsKeys.EditSelfCategory);
+      this.rolePermissionService.addPermission(role.id, editSelfCategoryPermissions.id);
+    }
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+
+    }
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewSubTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+
+    }
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfSubTopic,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+
+
+
+
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfMessage,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewMessage,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+
+    }
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.EditSelfComment,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+    }
+
+
+
+    if (0) {
+      const permission = await this.permissionService.create({
+        key: PermissionsKeys.ViewComment,
+        description: 'Edit or delete own categories',
+        title: 'Create or edit category permission',
+      })
+      const role = await this.roleService.findByKey(RolesKeys.User);
+
+      this.rolePermissionService.addPermission(role.id, permission.id);
+
+    }
+  }

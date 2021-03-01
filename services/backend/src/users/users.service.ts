@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -60,7 +60,11 @@ export class UsersService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+    const user = this.userRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+    return user;
   }
 
   findByEmail(email: string): Promise<User | null> {

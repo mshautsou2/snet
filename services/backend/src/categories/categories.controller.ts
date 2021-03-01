@@ -1,74 +1,63 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
 import { RequirePermissions } from 'src/roles-and-permissions/decorators/permission.decorator';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
-import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
 import { ExtractUser } from 'src/users/user.decorator';
 import { CategoryService as CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Category } from './entities/categories.entity';
 
 @Controller('categories')
 @ApiTags('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
+  constructor(private readonly categoriesService: CategoriesService) { }
 
   @Post()
-  async create(@ExtractUser() user: UserPayload, @Body() createCategoryDto: CreateCategoryDto) {
-    const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
-    if (accessGranted) {
-      throw new UnauthorizedException("You do not have permissions to create categories");
-    }
-    createCategoryDto.owner = user.id;
-    return this.categoriesService.create(createCategoryDto);
+  async create(@ExtractUser() user: UserPayload, @Body() category: Category) {
+    await this.failIfUnauthorized(user.id, category.id);
+    return this.categoriesService.create(category, user.id);
   }
 
   @Get()
   @RequirePermissions(PermissionsKeys.ViewCategory)
-  findAll(@ExtractUser() user) {
+  findAll() {
     return this.categoriesService.findAll();
   }
 
   @Get(':id')
   @RequirePermissions(PermissionsKeys.ViewCategory)
-  findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const category = await this.categoriesService.findOne(id);
+    this.failIfNotExists(category);
+    return category;
   }
 
   @Put(':id')
-  async update(@ExtractUser() user: UserPayload, @Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  async update(@ExtractUser() user: UserPayload, @Param('id') id: string, @Body() category: Category) {
+    await this.failIfUnauthorized(user.id, id);
+    const updatedEntity = await this.categoriesService.update(id, category);
+    this.failIfNotExists(updatedEntity)
 
-    let accessGranted = false;
-
-    const entityOwner = await this.categoriesService.isOwner(user.id, id);
-
-    if (entityOwner) {
-      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfCategory);
-    } else {
-      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditCategory);
-    }
-    if (!accessGranted) {
-      throw new UnauthorizedException("You do not have permissions to edit this category");
-    }
-    return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string, @ExtractUser() user: UserPayload) {
-
-    let accessGranted = false;
-
-    const entityOwner = await this.categoriesService.isOwner(user.id, id);
-
-    if (entityOwner) {
-      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfCategory);
-    } else {
-      accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfCategory);
-    }
-    if (!accessGranted) {
-      throw new UnauthorizedException("You do not have permissions to delete this category");
-    }
-    return this.categoriesService.remove(id);
+    await this.failIfUnauthorized(user.id, id);
+    const removedCategory = await this.categoriesService.remove(id);
+    this.failIfNotExists(removedCategory)
   }
+
+  private async failIfUnauthorized(userId: string, categoryId: string) {
+    const accessGranted = await this.categoriesService.checkCategoryPermission(userId, categoryId)
+    if (!accessGranted) {
+      throw new UnauthorizedException("You do not have enough permissions")
+    }
+  }
+
+  private async failIfNotExists(category: Category | null) {
+    if (!category) {
+      throw new NotFoundException("Category not found")
+    }
+  }
+
 }

@@ -1,34 +1,35 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
+import { PermissionsKeys } from 'src/roles-and-permissions/constants/permissions-keys.constants';
+import { RolesAndPermissionsService } from 'src/roles-and-permissions/services/roles-and-permissions.service';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryRepository } from './categoires.repository';
 import { Category } from './entities/categories.entity';
 
 @Injectable()
 export class CategoryService {
 
   constructor(
-    @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
+    private categoryRepository: CategoryRepository,
     private userService: UsersService,
+    private rolesPermissionService: RolesAndPermissionsService,
   ) { }
 
-  async create(createCategoryDto: CreateCategoryDto) {
-
+  async create(createCategoryDto: Category, ownerId: string) {
     return await this.categoryRepository.save({
       ...createCategoryDto,
-      owner: await this.userService.findOne(createCategoryDto.owner),
+      owner: await this.userService.findOne(ownerId)
     })
   }
 
+  async checkCategoryPermission(userId: string, categoryId: string) {
+    const isEntityOwner = await this.isOwner(userId, categoryId);
+    const perissionToCheck = isEntityOwner ? PermissionsKeys.EditSelfCategory : PermissionsKeys.EditCategory
+    const accessGranted = await this.rolesPermissionService.checkPermissions(userId, perissionToCheck);
+    return accessGranted;
+  }
+
   async isOwner(userId: string, categoryId: string) {
-    return await this.categoryRepository.createQueryBuilder('category')
-      .where('category.id = :categoryId', { categoryId })
-      .leftJoin('category.owner', 'owner')
-      .where('owner.id = :userId', { userId })
-      .getCount() > 0
+    return await this.categoryRepository.isOwner(userId, categoryId);
   }
 
   async findAll() {
@@ -36,30 +37,22 @@ export class CategoryService {
   }
 
   async findOne(id: string) {
-    return await this.categoryRepository.findOne(id, {
-      join: {
-        alias: 'categories',
-        leftJoinAndSelect: {
-          topcis: 'categories.topics',
-        },
-
-      }
-    });
+    return await this.categoryRepository.findById(id);
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+  async update(id: string, category: Category) {
     const toUpdate = await this.categoryRepository.findOne(id);
     if (!toUpdate) {
-      throw new NotFoundException(`Category with id "${id}" not found`);
+      return null;
     }
-    Object.assign(toUpdate, updateCategoryDto);
+    Object.assign(toUpdate, category);
     return await this.categoryRepository.save(toUpdate);
   }
 
   async remove(id: string) {
     const toDelete = await this.categoryRepository.findOne(id);
     if (!toDelete) {
-      throw new NotFoundException(`Category with id "${id}" not found`);
+      return null
     }
     return await this.categoryRepository.remove(toDelete);
   }
