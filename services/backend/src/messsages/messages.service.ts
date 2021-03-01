@@ -10,7 +10,6 @@ import { Message } from './entities/message.entity';
 @Injectable()
 export class MessageService {
 
-
   constructor(
     @InjectRepository(Message)
     private repository: Repository<Message>,
@@ -38,7 +37,6 @@ export class MessageService {
       .where('owner.id = :userId', { userId })
       .getCount() > 0
   }
-
 
   async findAll() {
     return await this.repository.find();

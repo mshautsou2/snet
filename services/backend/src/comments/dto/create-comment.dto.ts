@@ -3,7 +3,6 @@ import { IsString, IsUUID } from "class-validator";
 
 export class CreateCommentDTO implements Readonly<CreateCommentDTO> {
 
-
     @ApiProperty({ required: true })
     @IsString()
     content: string;

@@ -4,7 +4,6 @@ import { SubTopic } from "src/subtopics/entities/subtopic.entity";
 import { User } from "src/users/user.entity";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
-
 @Entity({ name: 'message' })
 export class Message extends BaseEntity {
 
@@ -22,7 +21,6 @@ export class Message extends BaseEntity {
 
   @ManyToOne(() => User, { eager: true })
   owner: User;
-
 
 }
 

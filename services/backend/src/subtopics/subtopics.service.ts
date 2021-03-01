@@ -11,7 +11,6 @@ import { SubTopic } from './entities/subtopic.entity';
 @Injectable()
 export class SubTopicsService {
 
-
   constructor(
     @InjectRepository(SubTopic)
     private repository: Repository<SubTopic>,
@@ -39,7 +38,6 @@ export class SubTopicsService {
       .where('owner.id = :userId', { userId })
       .getCount() > 0
   }
-
 
   async findAll() {
     return await this.repository.find();

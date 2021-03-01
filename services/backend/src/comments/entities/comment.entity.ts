@@ -3,7 +3,6 @@ import { BaseEntity } from "src/shared/entitiy/base.entity";
 import { User } from "src/users/user.entity";
 import { Column, Entity, ManyToOne } from "typeorm";
 
-
 @Entity({ name: 'comment' })
 export class Comment extends BaseEntity {
 
@@ -18,7 +17,6 @@ export class Comment extends BaseEntity {
 
   @ManyToOne(() => User, { eager: true })
   owner: User;
-
 
 }
 

@@ -6,7 +6,6 @@ import { UsersService } from './users.service';
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
 
-
   constructor(
     private userService: UsersService
   ) { }

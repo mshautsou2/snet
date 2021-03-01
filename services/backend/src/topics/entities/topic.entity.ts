@@ -4,7 +4,6 @@ import { SubTopic } from "src/subtopics/entities/subtopic.entity";
 import { User } from "src/users/user.entity";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
-
 @Entity({ name: 'topic' })
 export class Topic extends BaseEntity {
 

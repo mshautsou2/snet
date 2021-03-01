@@ -16,7 +16,6 @@ export class RolesAndPermissionsService {
 
     }
 
-
     async addPermission(roleId: string, permissionId: string) { //TODO: Optimize with Query Builder
 
         await getConnection()
@@ -42,13 +41,3 @@ export class RolesAndPermissionsService {
     }
 
 }
-
-/*
-===> roles
-<=== permissions
-SELECT * FROM role
-    LEFT JOIN role_permission on
-
-
-
-*/

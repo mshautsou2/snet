@@ -3,7 +3,6 @@ import { IsString, IsUUID } from "class-validator";
 
 export class CreateMessageDTO implements Readonly<CreateMessageDTO> {
 
-
     @ApiProperty({ required: true })
     @IsString()
     content: string;

@@ -3,7 +3,6 @@ import { Topic } from "src/topics/entities/topic.entity";
 import { User } from "src/users/user.entity";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
-
 @Entity({ name: 'category' })
 export class Category extends BaseEntity {
 

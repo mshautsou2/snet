@@ -12,7 +12,6 @@ export class UserResponseDTO implements Readonly<UserResponseDTO> {
     @IsEmail()
     email: string;
 
-
     static fromEntity(owner: User): UserResponseDTO {
         return {
             ...owner.toSanitizedEntity(),

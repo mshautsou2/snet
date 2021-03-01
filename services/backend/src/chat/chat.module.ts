@@ -8,18 +8,6 @@ import { SubTopicsModule } from 'src/subtopics/subtopics.module';
 import { UsersModule } from 'src/users/users.module';
 import { ChatGateway } from './chat.gateway';
 
-
-
-
-
-
-
-
-
-
-
-
-
 @Module({
   imports: [RolesAndPermissionsModule, UsersModule, SubTopicsModule, MessagesModule, CommentsModule],
   providers: [ChatGateway],

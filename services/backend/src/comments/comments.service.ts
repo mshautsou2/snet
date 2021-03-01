@@ -10,7 +10,6 @@ import { Comment } from './entities/comment.entity';
 @Injectable()
 export class CommentService {
 
-
   constructor(
     @InjectRepository(Comment)
     private repository: Repository<Comment>,
@@ -38,7 +37,6 @@ export class CommentService {
       .where('owner.id = :userId', { userId })
       .getCount() > 0
   }
-
 
   async findAll() {
     return await this.repository.find();

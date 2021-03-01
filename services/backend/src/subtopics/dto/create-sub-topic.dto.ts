@@ -3,7 +3,6 @@ import { IsString, IsUUID } from "class-validator";
 
 export class CreateSubTopicDTO implements Readonly<CreateSubTopicDTO> {
 
-
     @ApiProperty({ required: true })
     @IsString()
     name: string;

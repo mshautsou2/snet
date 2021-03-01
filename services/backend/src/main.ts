@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const DEV_ENVIRONMENT = config.get('NODE_ENV') === 'development';
 
-  const csrfProtection = true // Is it needed? https://stackoverflow.com/questions/45945951/jwt-and-csrf-differences
+  const csrfProtection = true
   if (!DEV_ENVIRONMENT && csrfProtection) {
     app.use(
       session({
@@ -24,7 +24,6 @@ async function bootstrap() {
 
     app.use(csurf())
   }
-
 
   if (DEV_ENVIRONMENT) {
     const document = SwaggerModule.createDocument(

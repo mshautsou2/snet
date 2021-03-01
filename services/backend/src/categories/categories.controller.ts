@@ -24,7 +24,6 @@ export class CategoriesController {
     return this.categoriesService.create(createCategoryDto);
   }
 
-
   @Get()
   @RequirePermissions(PermissionsKeys.ViewCategory)
   findAll(@ExtractUser() user) {

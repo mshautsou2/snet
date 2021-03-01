@@ -10,7 +10,6 @@ import { Topic } from './entities/topic.entity';
 @Injectable()
 export class TopicsService {
 
-
   constructor(
     @InjectRepository(Topic)
     private repository: Repository<Topic>,
@@ -38,7 +37,6 @@ export class TopicsService {
       .where('owner.id = :userId', { userId })
       .getCount() > 0
   }
-
 
   async findAll() {
     return await this.repository.find();

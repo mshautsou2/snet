@@ -2,11 +2,7 @@ import { HttpException } from '@nestjs/common';
 import {
     OnGatewayConnection,
     OnGatewayDisconnect, SubscribeMessage, WebSocketGateway,
-
-
     WebSocketServer,
-
-
     WsException
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
@@ -20,7 +16,6 @@ import { SubTopicsService } from 'src/subtopics/subtopics.service';
 import { UsersService } from 'src/users/users.service';
 import { ChatUser } from './chat-user.model';
 import { SubtopicAction } from './dto/subtopic-action.dto';
-
 
 @WebSocketGateway(3001, { namespace: 'chats' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -68,7 +63,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         this.server.emit('users', this.connectedUsers)
     }
 
-
     @SubscribeMessage('join')
     async onSubtopicJoin(client, data: SubtopicAction) {
         client.join(data.subtopicId)
@@ -105,7 +99,5 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         }
         client.broadcast.to(data.subtopicId).emit('message', data.content)
     }
-
-
 
 }

@@ -19,8 +19,6 @@ export class UsersController {
   @HttpCode(200)
   async loginUser(@Body() userDto: UserLoginDTO) {
     return await this.userService.loginUser(userDto);
-
-
   }
 
   @Get(':id')
