@@ -2,7 +2,7 @@ import { Category } from "src/categories/entities/categories.entity";
 import { BaseEntity } from "src/shared/entitiy/base.entity";
 import { SubTopic } from "src/subtopics/entities/subtopic.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 @Entity({ name: 'topic' })
 export class Topic extends BaseEntity {
@@ -20,6 +20,7 @@ export class Topic extends BaseEntity {
   subtopics: SubTopic[];
 
   @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'owner_id'})
   owner: User;
 }
 

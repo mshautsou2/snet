@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { RolesKeys } from 'src/roles-and-permissions/constants/roles-keys.constants';
 import { UserPayload } from 'src/roles-and-permissions/models/user.payload';
 import { RolesService } from 'src/roles-and-permissions/services/roles.service';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UserLoginDTO } from './dto/user-login.dto';
 import { User } from './user.entity';
@@ -59,6 +59,14 @@ export class UsersService {
     }
   }
 
+  async addRole(userId: string, roleId: string) {
+
+    await getConnection()
+        .createQueryBuilder()
+        .relation(User, "roles")
+        .of(userId)
+        .add(roleId)
+}
   findOne(id: string): Promise<User> {
     const user = this.userRepository.findOne(id);
     if (!user) {

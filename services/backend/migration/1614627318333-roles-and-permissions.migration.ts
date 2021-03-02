@@ -4,7 +4,7 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
         await queryRunner.createTable(new Table({
-            name: 'permission_copy',
+            name: 'permission',
             columns: [
                 {
                     name: 'id',
@@ -31,7 +31,7 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
         }), true)
 
         await queryRunner.createTable(new Table({
-            name: 'role_copy',
+            name: 'role',
             columns: [
                 {
                     name: 'id',
@@ -58,7 +58,7 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
         }), true)
 
         await queryRunner.createTable(new Table({
-            name: 'role_permissions_permission_copy',
+            name: 'role_permissions_permission',
             columns: [
                 {
                     name: 'role_id',
@@ -87,7 +87,9 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('permission_copy')
+        await queryRunner.dropTable('role_permissions_permission')
+        await queryRunner.dropTable('role')
+        await queryRunner.dropTable('permission')
     }
 
 }

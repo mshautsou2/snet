@@ -15,7 +15,10 @@ export class User extends BaseEntity {
   password: string;
 
   @ManyToMany((type) => Role)
-  @JoinTable()
+  @JoinTable({
+    name: 'user_roles', joinColumn: { name: 'role_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' }
+  })
   roles: Role[];
 
   toSanitizedEntity(): Omit<User, 'password'> {

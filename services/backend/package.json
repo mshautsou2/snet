@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
@@ -46,7 +47,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
     "swagger-ui-express": "^4.1.6",
-    "typeorm": "^0.2.31"
+    "typeorm": "^0.2.31",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",

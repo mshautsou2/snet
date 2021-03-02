@@ -3,7 +3,7 @@ import { IsString } from "class-validator";
 import { BaseEntity } from "src/shared/entitiy/base.entity";
 import { Topic } from "src/topics/entities/topic.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 @Entity({ name: 'category' })
 export class Category extends BaseEntity {
@@ -22,6 +22,7 @@ export class Category extends BaseEntity {
   topics: Topic[];
 
   @ManyToOne(() => User)
+  @JoinColumn({ name: 'owner_id'})
   owner: User;
 
 }
