@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RolesAndPermissionsModule } from 'src/modules/roles-and-permissions/roles-and-permissions.module';
+import { RolesAndPermissionsModule } from 'src/modules/permissions/roles-and-permissions.module';
 import { User } from './user.entity';
 import { UserMiddleware } from './user.middleware';
 import { UsersService } from './users.service';

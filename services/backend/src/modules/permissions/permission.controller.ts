@@ -8,11 +8,11 @@ import {
   Put
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreatePermissionDTO } from 'src/modules/roles-and-permissions/dto/create-permission.dto';
+import { CreatePermissionDTO } from 'src/modules/permissions/dto/create-permission.dto';
 import { FindOneParams } from 'src/modules/shared/dto/find-one.dto';
-import { DeleteOneParams } from 'src/modules/roles-and-permissions/dto/delete-one.dto';
-import { UpdatePermissionDTO } from 'src/modules/roles-and-permissions/dto/update-permission.dto';
-import { PermissionService } from 'src/modules/roles-and-permissions/services/permission.service';
+import { UpdatePermissionDTO } from 'src/modules/permissions/dto/update-permission.dto';
+import { PermissionService } from 'src/modules/permissions/permission.service';
+import { DeleteOneParams } from '../shared/dto/delete-one.dto';
 
 @Controller('permissions')
 @ApiTags('permissions')

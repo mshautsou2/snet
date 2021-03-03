@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, Unique } from 'typeorm';
-import { BaseEntity } from '../../shared/entitiy/base.entity';
-import { Permission } from './permission.entity';
+import { Permission } from '../permissions/permission.entity';
+import { BaseEntity } from '../shared/entitiy/base.entity';
 
 @Entity({ name: 'role' })
 @Unique(['key'])

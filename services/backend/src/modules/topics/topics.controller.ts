@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PermissionsKeys } from 'src/modules/roles-and-permissions/constants/permissions-keys.constants';
-import { UserPayload } from 'src/modules/roles-and-permissions/models/user.payload';
-import { RolesAndPermissionsService } from 'src/modules/roles-and-permissions/services/roles-and-permissions.service';
+import { PermissionsKeys } from 'src/modules/permissions/permissions-keys.constants';
+import { UserPayload } from 'src/modules/permissions/user.payload';
+import { RolesAndPermissionsService } from 'src/modules/permissions/services/roles-and-permissions.service';
 import { ExtractUser } from 'src/modules/users/user.decorator';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { TopicResponseDTO } from './dto/topic-response.dto';

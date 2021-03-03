@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PermissionsKeys } from 'src/modules/roles-and-permissions/constants/permissions-keys.constants';
-import { RequirePermissions } from 'src/modules/roles-and-permissions/decorators/permission.decorator';
-import { UserPayload } from 'src/modules/roles-and-permissions/models/user.payload';
+import { PermissionsKeys } from 'src/modules/permissions/permissions-keys.constants';
+import { RequirePermissions } from 'src/modules/permissions/permission.decorator';
+import { UserPayload } from 'src/modules/permissions/user.payload';
 import { ExtractUser } from 'src/modules/users/user.decorator';
 import { CategoryService as CategoriesService } from './categories.service';
 import { Category } from 'src/modules/categories/categories.entity';

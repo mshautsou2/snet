@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionsKeys } from 'src/modules/roles-and-permissions/constants/permissions-keys.constants';
-import { RolesAndPermissionsService } from 'src/modules/roles-and-permissions/services/roles-and-permissions.service';
+import { PermissionsKeys } from 'src/modules/permissions/permissions-keys.constants';
+import { RolesAndPermissionsService } from 'src/modules/permissions/services/roles-and-permissions.service';
 import { UserNotFoundError, UsersService } from 'src/modules/users/users.service';
 import { CategoryRepository } from 'src/modules/categories/categoires.repository';
 import { Category } from 'src/modules/categories/categories.entity';

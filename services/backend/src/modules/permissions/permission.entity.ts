@@ -1,5 +1,5 @@
 import { Column, Entity, Unique } from 'typeorm';
-import { BaseEntity } from '../../shared/entitiy/base.entity';
+import { BaseEntity } from 'src/modules/shared/entitiy/base.entity';
 
 @Entity({ name: 'permission' })
 @Unique(['key'])

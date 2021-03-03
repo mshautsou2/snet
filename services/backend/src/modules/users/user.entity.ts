@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/modules/shared/entitiy/base.entity';
 import { Column, Entity, JoinTable, ManyToMany, Unique } from 'typeorm';
-import { Role } from '../roles-and-permissions/entities/role.entity';
+import { Role } from '../roles/role.entity';
 
 @Entity()
 @Unique(['email'])

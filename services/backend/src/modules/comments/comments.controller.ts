@@ -1,13 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PermissionsKeys } from 'src/modules/roles-and-permissions/constants/permissions-keys.constants';
-import { UserPayload } from 'src/modules/roles-and-permissions/models/user.payload';
-import { RolesAndPermissionsService } from 'src/modules/roles-and-permissions/services/roles-and-permissions.service';
+import { PermissionsKeys } from 'src/modules/permissions/permissions-keys.constants';
+import { UserPayload } from 'src/modules/permissions/user.payload';
+import { RolesAndPermissionsService } from 'src/modules/permissions/services/roles-and-permissions.service';
 import { ExtractUser } from 'src/modules/users/user.decorator';
 import { CommentService } from 'src/modules/comments/comments.service';
-import { CommentResponseDTO } from 'src/modules/comments/dto/comment-response.dto';
-import { CreateCommentDTO } from 'src/modules/comments/dto/create-comment.dto';
-import { UpdateCommentDTO } from 'src/modules/comments/dto/update-comment.dto';
+import { Comment } from 'src/modules/comments/comment.entity'
+import { CreateCommentDTO } from './dto/create-comment.dto';
 
 @Controller('comments')
 @ApiTags('comments')
@@ -15,13 +14,12 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentService, private readonly rolesPermissionService: RolesAndPermissionsService) { }
 
   @Post()
-  async create(@Body() createCommentDTO: CreateCommentDTO, @ExtractUser() user) {
-    const accessGranted = await this.rolesPermissionService.checkPermissions(user.id, PermissionsKeys.EditSelfComment);
-    if (!accessGranted) {
-      throw new UnauthorizedException("You do not have permissions to leave comments");
-    }
-    createCommentDTO.ownerId = user.id;
-    return CommentResponseDTO.fromEntity(await this.commentsService.create(createCommentDTO));
+  async create(@Body() body: CreateCommentDTO, @ExtractUser() user) {
+    await this.failIfUnauthorized(user.id, body.id);
+
+    await this.commentsService.create(body, body)
+    body.ownerId = user.id;
+    return CommentResponseDTO.fromEntity(await this.commentsService.create(body));
   }
 
   @Get()
@@ -76,4 +74,19 @@ export class CommentsController {
     }
     return CommentResponseDTO.fromEntity(await this.commentsService.remove(id));
   }
+
+  
+  private async failIfUnauthorized(userId: string, commentId: string) {
+    const accessGranted = await this.commentsService.checkCommentPermission(userId, commentId)
+    if (!accessGranted) {
+      throw new UnauthorizedException("You do not have enough permissions")
+    }
+  }
+
+  private async failIfNotExists(category?: Comment) {
+    if (!category) {
+      throw new NotFoundException("Category not found")
+    }
+  }
+
 }

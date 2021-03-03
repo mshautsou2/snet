@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PermissionController } from 'src/modules/roles-and-permissions/controllers/permission.controller';
+import { PermissionController } from 'src/modules/permissions/permission.controller';
 
 describe('PermissionController', () => {
   let controller: PermissionController;

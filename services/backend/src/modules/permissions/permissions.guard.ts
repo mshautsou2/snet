@@ -1,13 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { User } from 'src/modules/users/user.entity';
-import { PermissionsKeys } from '../constants/permissions-keys.constants';
-import { REQUIRE_PERMISSIONS_KEY } from '../decorators/permission.decorator';
-import { RolesAndPermissionsService } from '../services/roles-and-permissions.service';
+import { RolesService } from '../roles/roles.service';
+import { REQUIRE_PERMISSIONS_KEY } from './permission.decorator';
+import { PermissionsKeys } from './permissions-keys.constants';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private reflector: Reflector, private rolesAndPermissionsService: RolesAndPermissionsService) {
+  constructor(private reflector: Reflector, private rolesService: RolesService) {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -21,7 +21,7 @@ export class PermissionsGuard implements CanActivate {
     if (!requiredPermissions || requiredPermissions.length === 0) {
       return true;
     }
-    const accessGranted = this.rolesAndPermissionsService.checkPermissions(user.id, ...requiredPermissions)
+    const accessGranted = this.rolesService.checkPermissions(user.id, ...requiredPermissions)
     return accessGranted;
   }
 }
