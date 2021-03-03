@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, UnprocessableEntityException } from '@ne
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { NotFoundError } from 'src/errors/NotFoundError';
 import { RolesKeys } from 'src/modules/roles-and-permissions/constants/roles-keys.constants';
 import { UserPayload } from 'src/modules/roles-and-permissions/models/user.payload';
 import { RolesService } from 'src/modules/roles-and-permissions/services/roles.service';
@@ -9,6 +10,10 @@ import { getConnection, Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UserLoginDTO } from './dto/user-login.dto';
 import { User } from './user.entity';
+
+export class UserNotFoundError {
+  message = "User not found"
+}
 
 @Injectable()
 export class UsersService {
@@ -66,11 +71,12 @@ export class UsersService {
         .relation(User, "roles")
         .of(userId)
         .add(roleId)
-}
-  findOne(id: string): Promise<User> {
+  }
+
+  async findOne(id: string){
     const user = this.userRepository.findOne(id);
     if (!user) {
-      throw new NotFoundException("User not found");
+      throw new NotFoundError('User not found')
     }
     return user;
   }
@@ -83,7 +89,7 @@ export class UsersService {
     })
   }
 
-  async getUserAuth(payload: UserPayload): Promise<User> {
+  async getUserAuth(payload: UserPayload): Promise<User | UserNotFoundError> {
     if (!payload) {
       return await this.getAnonymousUser();
     }

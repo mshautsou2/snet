@@ -1,4 +1,4 @@
-import { Category } from "src/modules/categories/entities/categories.entity";
+import { Category } from "src/modules/categories/categories.entity";
 import { BaseEntity } from "src/modules/shared/entitiy/base.entity";
 import { SubTopic } from "src/modules/subtopics/entities/subtopic.entity";
 import { User } from "src/modules/users/user.entity";

@@ -19,14 +19,14 @@ export class TopicsService {
 
   async create(createTopicDto: CreateTopicDto) {
     const category = await this.categoryService.findOne(createTopicDto.categoryId);
-
-    if (!category) {
-      throw new NotFoundException(`Category with id "${createTopicDto.categoryId}" not found`);
+    const owner = await this.userService.findOne(createTopicDto.ownerId)
+    if (!category || !owner) {
+      return false;
     }
     return await this.repository.save({
       ...createTopicDto,
-      owner: await this.userService.findOne(createTopicDto.ownerId),
-      category: await this.categoryService.findOne(createTopicDto.categoryId),
+      owner,
+      category,
     })
   }
 

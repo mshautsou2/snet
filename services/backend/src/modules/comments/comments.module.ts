@@ -5,7 +5,7 @@ import { RolesAndPermissionsModule } from 'src/modules/roles-and-permissions/rol
 import { UsersModule } from 'src/modules/users/users.module';
 import { CommentsController } from 'src/modules/comments/comments.controller';
 import { CommentService } from 'src/modules/comments/comments.service';
-import { Comment } from 'src/modules/comments/entities/comment.entity';
+import { Comment } from 'src/modules/comments/comment.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Comment]), RolesAndPermissionsModule, UsersModule, MessagesModule],

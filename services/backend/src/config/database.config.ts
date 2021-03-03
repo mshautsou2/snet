@@ -22,6 +22,6 @@ export default registerAs(
     },
 
     autoLoadEntities: true,
-    ssl: false, // FIXME
+    ssl: false, // FIXME: retrieve value from env var
   }),
 );

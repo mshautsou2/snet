@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PermissionsKeys } from 'src/modules/roles-and-permissions/constants/permissions-keys.constants';
 import { RolesAndPermissionsService } from 'src/modules/roles-and-permissions/services/roles-and-permissions.service';
-import { UsersService } from 'src/modules/users/users.service';
+import { UserNotFoundError, UsersService } from 'src/modules/users/users.service';
 import { CategoryRepository } from 'src/modules/categories/categoires.repository';
-import { Category } from 'src/modules/categories/entities/categories.entity';
+import { Category } from 'src/modules/categories/categories.entity';
+import { NotFoundError } from 'src/errors/NotFoundError';
 
 @Injectable()
 export class CategoryService {
@@ -14,11 +15,12 @@ export class CategoryService {
     private rolesPermissionService: RolesAndPermissionsService,
   ) { }
 
-  async create(createCategoryDto: Category, ownerId: string) {
+  async create(createCategoryDto: Category, ownerId: string): Promise<Category> {
+    const owner = await this.userService.findOne(ownerId)
     return await this.categoryRepository.save({
       ...createCategoryDto,
-      owner: await this.userService.findOne(ownerId)
-    })
+      owner,
+    });
   }
 
   async checkCategoryPermission(userId: string, categoryId: string) {
@@ -37,13 +39,17 @@ export class CategoryService {
   }
 
   async findOne(id: string) {
-    return await this.categoryRepository.findById(id);
+    const category = await this.categoryRepository.findById(id);
+    if (!category) {
+      this.throwCategoryNotFoundError();
+    }
+    return category;
   }
 
   async update(id: string, category: Category) {
     const toUpdate = await this.categoryRepository.findOne(id);
     if (!toUpdate) {
-      return null;
+      this.throwCategoryNotFoundError();
     }
     Object.assign(toUpdate, category);
     return await this.categoryRepository.save(toUpdate);
@@ -52,8 +58,12 @@ export class CategoryService {
   async remove(id: string) {
     const toDelete = await this.categoryRepository.findOne(id);
     if (!toDelete) {
-      return null
+      this.throwCategoryNotFoundError();
     }
     return await this.categoryRepository.remove(toDelete);
+  }
+
+  private throwCategoryNotFoundError() {
+    throw new NotFoundError('Category not found')
   }
 }

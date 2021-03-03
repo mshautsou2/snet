@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateMessageDTO } from 'src/modules/messages/dto/create-message.dto';
 import { UpdateMessageDTO } from 'src/modules/messages/dto/update-message.dto';
 import { Message } from 'src/modules/messages/entities/message.entity';
+import { NotFoundError } from 'src/errors/NotFoundError';
 
 @Injectable()
 export class MessageService {
@@ -43,7 +44,11 @@ export class MessageService {
   }
 
   async findOne(id: string) {
-    return await this.repository.findOne(id);
+    const message = await this.repository.findOne(id);
+    if (!message) {
+      throw new NotFoundError(`Message with id "${id}" not found`)
+    }
+    return message
   }
 
   async update(id: string, updateMessageDto: UpdateMessageDTO) {

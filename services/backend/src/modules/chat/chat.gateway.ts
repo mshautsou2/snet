@@ -14,6 +14,8 @@ import { UserPayload } from 'src/modules/roles-and-permissions/models/user.paylo
 import { RolesAndPermissionsService } from 'src/modules/roles-and-permissions/services/roles-and-permissions.service';
 import { SubTopicsService } from 'src/modules/subtopics/subtopics.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { Comment } from '../comments/comment.entity';
+import { Message } from '../messages/entities/message.entity';
 import { ChatUser } from './chat-user.model';
 import { SubtopicAction } from './dto/subtopic-action.dto';
 
@@ -23,7 +25,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
 
-    connectedUsers: ChatUser[] = []//can be moved to database
+    connectedUsers: ChatUser[] = []
 
     constructor(
         private readonly roleAndPermissionService: RolesAndPermissionsService,
@@ -35,25 +37,26 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleConnection(socket: Socket) {
         const userPayload: UserPayload = await this.userService.decodeAuthToken(socket.handshake.query.token)
+        const { id } = userPayload;
         if (!userPayload) {
             throw new HttpException('Unauthorized access', 2)
         }
-        const readAccess: boolean = await this.roleAndPermissionService.checkPermissions(userPayload.id, PermissionsKeys.ViewComment, PermissionsKeys.ViewMessage);
-        if (!readAccess) {
+        const canRead: boolean = await this.roleAndPermissionService.checkPermissions(id, PermissionsKeys.ViewComment, PermissionsKeys.ViewMessage);
+        if (!canRead) {
             throw new HttpException('Unauthorized access', 2)
         }
-        const writeAccess: boolean = await this.roleAndPermissionService.checkPermissions(userPayload.id, PermissionsKeys.EditSelfComment, PermissionsKeys.EditSelfMessage);
-        const user = await this.userService.findOne(userPayload.id)
+        const canWrite = await this.roleAndPermissionService.checkPermissions(id, PermissionsKeys.EditSelfComment, PermissionsKeys.EditSelfMessage);
+        const user = await this.userService.findOne(id)
+
         this.connectedUsers.push({
             id: user.id,
-            readOnly: !writeAccess,
+            readOnly: !canWrite,
             socketId: socket.id,
         })
         this.server.emit('users', this.connectedUsers)
     }
 
     async handleDisconnect(socket: Socket) {
-        ('here')
         const userPayload: UserPayload = await this.userService.decodeAuthToken(socket.handshake.query.token)
         if (!userPayload) {
             throw new WsException('Unauthorized access')
@@ -84,13 +87,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
             throw new WsException('You do not have permissions to leave messages')
         }
 
+        const body = { content: data.content }
         if (data.replyTo) {
-            await this.commentService.create({
-                content: data.content,
-                messageId: data.replyTo,
-                ownerId: user.id,
-            })
+            await this.commentService.create(new Comment(body), data.replyTo, user.id)
+
         } else {
+            await this.messageService.create(new Message(body), , user.id)
             await this.messageService.create({
                 content: data.content,
                 ownerId: user.id,

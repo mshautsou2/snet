@@ -6,16 +6,16 @@ import { CategoryModule } from 'src/modules/categories/categories.module';
 import { ChatModule } from 'src/modules/chat/chat.module';
 import { CommentsModule } from 'src/modules/comments/comments.module';
 import { MessagesModule } from 'src/modules/messages/messages.module';
-import { Permission } from './modules/roles-and-permissions/entities/permission.entity';
-import { PermissionsGuard } from './modules/roles-and-permissions/guards/permissions.guard';
-import { RolesAndPermissionsModule } from './modules/roles-and-permissions/roles-and-permissions.module';
-import { PermissionService } from './modules/roles-and-permissions/services/permission.service';
-import { RolesAndPermissionsService } from './modules/roles-and-permissions/services/roles-and-permissions.service';
-import { RolesService } from './modules/roles-and-permissions/services/roles.service';
-import { SubTopicsModule } from './modules/subtopics/subtopics.module';
-import { TopicsModule } from './modules/topics/topics.module';
-import { UsersController } from './modules/users/users.controller';
-import { UsersModule } from './modules/users/users.module';
+import { Permission } from './roles-and-permissions/entities/permission.entity';
+import { PermissionsGuard } from './roles-and-permissions/guards/permissions.guard';
+import { RolesAndPermissionsModule } from './roles-and-permissions/roles-and-permissions.module';
+import { PermissionService } from './roles-and-permissions/services/permission.service';
+import { RolesAndPermissionsService } from './roles-and-permissions/services/roles-and-permissions.service';
+import { RolesService } from './roles-and-permissions/services/roles.service';
+import { SubTopicsModule } from './subtopics/subtopics.module';
+import { TopicsModule } from './topics/topics.module';
+import { UsersController } from './users/users.controller';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

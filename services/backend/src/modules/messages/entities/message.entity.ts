@@ -1,4 +1,4 @@
-import { Comment } from "src/modules/comments/entities/comment.entity";
+import { Comment } from "src/modules/comments/comment.entity";
 import { BaseEntity } from "src/modules/shared/entitiy/base.entity";
 import { SubTopic } from "src/modules/subtopics/entities/subtopic.entity";
 import { User } from "src/modules/users/user.entity";

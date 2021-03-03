@@ -5,7 +5,7 @@ import { RequirePermissions } from 'src/modules/roles-and-permissions/decorators
 import { UserPayload } from 'src/modules/roles-and-permissions/models/user.payload';
 import { ExtractUser } from 'src/modules/users/user.decorator';
 import { CategoryService as CategoriesService } from './categories.service';
-import { Category } from 'src/modules/categories/entities/categories.entity';
+import { Category } from 'src/modules/categories/categories.entity';
 
 @Controller('categories')
 @ApiTags('categories')
@@ -15,13 +15,13 @@ export class CategoriesController {
   @Post()
   async create(@ExtractUser() user: UserPayload, @Body() category: Category) {
     await this.failIfUnauthorized(user.id, category.id);
-    return this.categoriesService.create(category, user.id);
+    return await this.categoriesService.create(category, user.id);
   }
 
   @Get()
   @RequirePermissions(PermissionsKeys.ViewCategory)
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll() {
+    return await this.categoriesService.findAll();
   }
 
   @Get(':id')

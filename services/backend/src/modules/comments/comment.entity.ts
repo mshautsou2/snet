@@ -18,5 +18,10 @@ export class Comment extends BaseEntity {
   @ManyToOne(() => User, { eager: true })
   owner: User;
 
+  constructor(raw: Partial<Comment>) {
+    super();
+    Object.assign(this, raw);
+  }
+
 }
 
