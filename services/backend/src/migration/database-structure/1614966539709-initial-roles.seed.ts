@@ -40,7 +40,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addRole(queryRunner, 'Root', 'EditAnySubtopic');
     //ROOT
     await this.addRole(queryRunner, 'Root', 'ViewPermissions');
-    awaitb this.addRole(queryRunner, 'Root', 'EditPermissions');
+    await this.addRole(queryRunner, 'Root', 'EditPermissions');
     await this.addRole(queryRunner, 'Root', 'ViewRoles');
     await this.addRole(queryRunner, 'Root', 'EditRoles');
     await this.addRole(queryRunner, 'Root', 'EditAnyCategory');
