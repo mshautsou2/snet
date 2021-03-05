@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const DEV_ENVIRONMENT = config.get('NODE_ENV') === 'development';
 
-  const csrfProtection = true
+  const csrfProtection = true;
   if (!DEV_ENVIRONMENT && csrfProtection) {
     app.use(
       session({
@@ -22,15 +22,13 @@ async function bootstrap() {
       }),
     );
 
-    app.use(csurf())
+    app.use(csurf());
   }
 
   if (DEV_ENVIRONMENT) {
     const document = SwaggerModule.createDocument(
       app,
-      new DocumentBuilder()
-        .setTitle('SNet Documetation')
-        .build(),
+      new DocumentBuilder().setTitle('SNet Documetation').build(),
     );
     SwaggerModule.setup('docs', app, document);
   }

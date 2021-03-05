@@ -12,7 +12,7 @@ export default registerAs(
     database: process.env.POSTGRES_DATABASE,
     entities: ['dist/entity/**/*.js'],
 
-    synchronize: true,
+    synchronize: false,
     migrationsTableName: 'migration',
 
     migrations: ['src/migration/*.ts'],
