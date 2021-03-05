@@ -16,4 +16,9 @@ export class Permission extends BaseEntity {
   @ApiProperty()
   @Column()
   description: string;
+
+  constructor(raw: Partial<Permission>) {
+    super();
+    Object.assign(this, raw);
+  }
 }
