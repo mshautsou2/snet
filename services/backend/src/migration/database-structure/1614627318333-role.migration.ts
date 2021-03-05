@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class PermissionMigration1614627318333 implements MigrationInterface {
+export class role1614627318333 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'permission',
+        name: 'role',
         columns: [
           {
             name: 'id',
@@ -36,8 +36,6 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
       }),
       true,
     );
-
-
 
     await queryRunner.createTable(
       new Table({
@@ -80,6 +78,5 @@ export class PermissionMigration1614627318333 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('role_permissions_permission');
     await queryRunner.dropTable('role');
-    await queryRunner.dropTable('permission');
   }
 }
