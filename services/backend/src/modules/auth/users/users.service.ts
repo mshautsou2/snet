@@ -32,13 +32,8 @@ export class UsersService extends BaseCRUDService<User> {
 
   async loginUser(userDto: UserLoginDTO) {
     const user = await this.findByEmail(userDto.email);
-    let authenticationPassed = false;
-    if (user) {
-      const isMatch = bcrypt.compareSync(userDto.password, user.password);
-      if (isMatch) {
-        authenticationPassed = true;
-      }
-    }
+    const authenticationPassed =
+      user && bcrypt.compareSync(userDto.password, user.password);
     if (authenticationPassed) {
       const userPayload = { id: user.id };
       const authToken = this.jwtService.sign(userPayload);

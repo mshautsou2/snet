@@ -1,10 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { PermissionService } from 'src/modules/auth/permissions/permission.service';
 import { User } from 'src/modules/auth/users/user.entity';
 import {
+  isCustomPolictyConfig,
+  isMultiPermissionConfig,
   isSinglePermissionConfig,
   PermissionConfig,
-  REQUIRE_PERMISSIONS_KEY
+  REQUIRE_PERMISSIONS_KEY,
 } from '../decorators/permission.decorator';
 import { RolesService } from '../modules/auth/roles/roles.service';
 
@@ -13,6 +16,7 @@ export class PermissionsGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private rolesService: RolesService,
+    private permissionService: PermissionService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -26,14 +30,41 @@ export class PermissionsGuard implements CanActivate {
     if (!permissionConfig) {
       return true;
     }
-    if (isSinglePermissionConfig(permissionConfig)) {
-      return await this.
+    if (!user.id) {
+      return false;
     }
+    if (isSinglePermissionConfig(permissionConfig)) {
+      return await this.rolesService.hasPermissions(user.id, permissionConfig);
+    }
+    if (isMultiPermissionConfig(permissionConfig)) {
+      return await this.rolesService.hasPermissions(
+        user.id,
+        ...permissionConfig,
+      );
+    }
+    if (isCustomPolictyConfig(permissionConfig)) {
+      const resourceId = request.params?.id;
+      const {
+        entityName,
+        anyEntityPermissions,
+        ownEntityPermissions,
+      } = permissionConfig;
+      const isOwner =
+        resourceId &&
+        (await this.permissionService.isOwner(entityName, resourceId, user.id));
 
-    const accessGranted = this.rolesService.checkPermissions(
-      user.id,
-      ...requiredPermissions,
-    );
-    return accessGranted;
+      if (isOwner) {
+        return await this.rolesService.hasPermissions(
+          user.id,
+          ...ownEntityPermissions,
+        );
+      } else {
+        return await this.rolesService.hasPermissions(
+          user.id,
+          ...anyEntityPermissions,
+        );
+      }
+    }
+    return false;
   }
 }

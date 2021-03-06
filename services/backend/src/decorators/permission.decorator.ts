@@ -24,7 +24,7 @@ export const isSinglePermissionConfig = (
   return typeof config === 'string';
 };
 
-export const isGeneralMultiPermissionConfig = (
+export const isMultiPermissionConfig = (
   config: PermissionConfig,
 ): config is MultiPermissionConfig => {
   return Array.isArray(config);

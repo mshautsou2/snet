@@ -17,17 +17,17 @@ export class RoleRepository extends BaseCRUDRepository<Role> {
   }
 
   async hasPermissions(userId: string, ...permissions: PermissionsKeys[]) {
-    return (
+    const result =
       (await getConnection()
         .getRepository(User)
         .createQueryBuilder('user')
         .where('user.id = :userId', { userId })
         .leftJoin('user.roles', 'role')
         .leftJoin('role.permissions', 'permission')
-        .where('permission.key IN (:...permissions)', { permissions })
+        .andWhere('permission.key IN (:...permissions)', { permissions })
         .select('TOP 1')
-        .getCount()) > 0
-    );
+        .getCount()) > 0;
+    return result;
   }
 
   async findByKey(key: RolesKeys): Promise<Role> {

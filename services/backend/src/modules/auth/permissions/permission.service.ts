@@ -8,4 +8,8 @@ export class PermissionService extends BaseCRUDService<Permission> {
   constructor(protected repository: PermissionRepository) {
     super();
   }
+
+  async isOwner(entityName: string, resourceId: string, userId: string) {
+    return await this.repository.isOwner(entityName, resourceId, userId);
+  }
 }

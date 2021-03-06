@@ -20,30 +20,30 @@ export class InitialRoles1614966539709 implements MigrationInterface {
       description: 'Сan do anything with anything/anyone',
     });
     //ANONYMOUS
-    await this.addRole(queryRunner, 'Root', 'RegisterUser');
-    await this.addRole(queryRunner, 'Root', 'ViewCategory');
-    await this.addRole(queryRunner, 'Root', 'ViewTopic');
-    await this.addRole(queryRunner, 'Root', 'ViewSubtopic');
-    await this.addRole(queryRunner, 'Root', 'ViewMessage');
-    await this.addRole(queryRunner, 'Root', 'ViewComment');
+    await this.addPermission(queryRunner, 'Root', 'RegisterUser');
+    await this.addPermission(queryRunner, 'Root', 'ViewCategory');
+    await this.addPermission(queryRunner, 'Root', 'ViewTopic');
+    await this.addPermission(queryRunner, 'Root', 'ViewSubtopic');
+    await this.addPermission(queryRunner, 'Root', 'ViewMessage');
+    await this.addPermission(queryRunner, 'Root', 'ViewComment');
     //USER
-    await this.addRole(queryRunner, 'Root', 'ViewSelfUser');
-    await this.addRole(queryRunner, 'Root', 'ViewAnyUser');
-    await this.addRole(queryRunner, 'Root', 'EditSelfMessage');
-    await this.addRole(queryRunner, 'Root', 'EditSelfComment');
+    await this.addPermission(queryRunner, 'Root', 'ViewSelfUser');
+    await this.addPermission(queryRunner, 'Root', 'ViewAnyUser');
+    await this.addPermission(queryRunner, 'Root', 'EditSelfMessage');
+    await this.addPermission(queryRunner, 'Root', 'EditSelfComment');
     //MODERATOR
-    await this.addRole(queryRunner, 'Root', 'EditAnyComment');
-    await this.addRole(queryRunner, 'Root', 'EditAnyMessage');
+    await this.addPermission(queryRunner, 'Root', 'EditAnyComment');
+    await this.addPermission(queryRunner, 'Root', 'EditAnyMessage');
     //ADMIN
-    await this.addRole(queryRunner, 'Root', 'EditSelfCategory');
-    await this.addRole(queryRunner, 'Root', 'EditAnyTopic');
-    await this.addRole(queryRunner, 'Root', 'EditAnySubtopic');
+    await this.addPermission(queryRunner, 'Root', 'EditSelfCategory');
+    await this.addPermission(queryRunner, 'Root', 'EditAnyTopic');
+    await this.addPermission(queryRunner, 'Root', 'EditAnySubtopic');
     //ROOT
-    await this.addRole(queryRunner, 'Root', 'ViewPermissions');
-    await this.addRole(queryRunner, 'Root', 'EditPermissions');
-    await this.addRole(queryRunner, 'Root', 'ViewRoles');
-    await this.addRole(queryRunner, 'Root', 'EditRoles');
-    await this.addRole(queryRunner, 'Root', 'EditAnyCategory');
+    await this.addPermission(queryRunner, 'Root', 'ViewPermissions');
+    await this.addPermission(queryRunner, 'Root', 'EditPermissions');
+    await this.addPermission(queryRunner, 'Root', 'ViewRoles');
+    await this.addPermission(queryRunner, 'Root', 'EditRoles');
+    await this.addPermission(queryRunner, 'Root', 'EditAnyCategory');
   }
 
   private async insertAdminRole(queryRunner: QueryRunner) {
@@ -54,24 +54,24 @@ export class InitialRoles1614966539709 implements MigrationInterface {
         'Moderator permissions + can create/delete topics, subtopics and categories',
     });
     //ANONYMOUS
-    await this.addRole(queryRunner, 'Admin', 'RegisterUser');
-    await this.addRole(queryRunner, 'Admin', 'ViewCategory');
-    await this.addRole(queryRunner, 'Admin', 'ViewTopic');
-    await this.addRole(queryRunner, 'Admin', 'ViewSubtopic');
-    await this.addRole(queryRunner, 'Admin', 'ViewMessage');
-    await this.addRole(queryRunner, 'Admin', 'ViewComment');
+    await this.addPermission(queryRunner, 'Admin', 'RegisterUser');
+    await this.addPermission(queryRunner, 'Admin', 'ViewCategory');
+    await this.addPermission(queryRunner, 'Admin', 'ViewTopic');
+    await this.addPermission(queryRunner, 'Admin', 'ViewSubtopic');
+    await this.addPermission(queryRunner, 'Admin', 'ViewMessage');
+    await this.addPermission(queryRunner, 'Admin', 'ViewComment');
     //USER
-    await this.addRole(queryRunner, 'Admin', 'ViewSelfUser');
-    await this.addRole(queryRunner, 'Admin', 'ViewAnyUser');
-    await this.addRole(queryRunner, 'Admin', 'EditSelfMessage');
-    await this.addRole(queryRunner, 'Admin', 'EditSelfComment');
+    await this.addPermission(queryRunner, 'Admin', 'ViewSelfUser');
+    await this.addPermission(queryRunner, 'Admin', 'ViewAnyUser');
+    await this.addPermission(queryRunner, 'Admin', 'EditSelfMessage');
+    await this.addPermission(queryRunner, 'Admin', 'EditSelfComment');
     //MODERATOR
-    await this.addRole(queryRunner, 'Admin', 'EditAnyComment');
-    await this.addRole(queryRunner, 'Admin', 'EditAnyMessage');
+    await this.addPermission(queryRunner, 'Admin', 'EditAnyComment');
+    await this.addPermission(queryRunner, 'Admin', 'EditAnyMessage');
     //ADMIN
-    await this.addRole(queryRunner, 'Admin', 'EditSelfCategory');
-    await this.addRole(queryRunner, 'Admin', 'EditAnyTopic');
-    await this.addRole(queryRunner, 'Admin', 'EditAnySubtopic');
+    await this.addPermission(queryRunner, 'Admin', 'EditSelfCategory');
+    await this.addPermission(queryRunner, 'Admin', 'EditAnyTopic');
+    await this.addPermission(queryRunner, 'Admin', 'EditAnySubtopic');
   }
 
   private async insertModeratorRole(queryRunner: QueryRunner) {
@@ -81,20 +81,20 @@ export class InitialRoles1614966539709 implements MigrationInterface {
       description: 'Can read/leave comments and messages',
     });
     //ANONYMOUS
-    await this.addRole(queryRunner, 'Moderator', 'RegisterUser');
-    await this.addRole(queryRunner, 'Moderator', 'ViewCategory');
-    await this.addRole(queryRunner, 'Moderator', 'ViewTopic');
-    await this.addRole(queryRunner, 'Moderator', 'ViewSubtopic');
-    await this.addRole(queryRunner, 'Moderator', 'ViewMessage');
-    await this.addRole(queryRunner, 'Moderator', 'ViewComment');
+    await this.addPermission(queryRunner, 'Moderator', 'RegisterUser');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewCategory');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewTopic');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewSubtopic');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewMessage');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewComment');
     //USER
-    await this.addRole(queryRunner, 'Moderator', 'ViewSelfUser');
-    await this.addRole(queryRunner, 'Moderator', 'ViewAnyUser');
-    await this.addRole(queryRunner, 'Moderator', 'EditSelfMessage');
-    await this.addRole(queryRunner, 'Moderator', 'EditSelfComment');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewSelfUser');
+    await this.addPermission(queryRunner, 'Moderator', 'ViewAnyUser');
+    await this.addPermission(queryRunner, 'Moderator', 'EditSelfMessage');
+    await this.addPermission(queryRunner, 'Moderator', 'EditSelfComment');
     //MODERATOR
-    await this.addRole(queryRunner, 'Moderator', 'EditAnyComment');
-    await this.addRole(queryRunner, 'Moderator', 'EditAnyMessage');
+    await this.addPermission(queryRunner, 'Moderator', 'EditAnyComment');
+    await this.addPermission(queryRunner, 'Moderator', 'EditAnyMessage');
   }
 
   private async insertUserRole(queryRunner: QueryRunner) {
@@ -104,17 +104,17 @@ export class InitialRoles1614966539709 implements MigrationInterface {
       description: 'Can read/leave comments and messages',
     });
     //ANONYMOUS
-    await this.addRole(queryRunner, 'User', 'RegisterUser');
-    await this.addRole(queryRunner, 'User', 'ViewCategory');
-    await this.addRole(queryRunner, 'User', 'ViewTopic');
-    await this.addRole(queryRunner, 'User', 'ViewSubtopic');
-    await this.addRole(queryRunner, 'User', 'ViewMessage');
-    await this.addRole(queryRunner, 'User', 'ViewComment');
+    await this.addPermission(queryRunner, 'User', 'RegisterUser');
+    await this.addPermission(queryRunner, 'User', 'ViewCategory');
+    await this.addPermission(queryRunner, 'User', 'ViewTopic');
+    await this.addPermission(queryRunner, 'User', 'ViewSubtopic');
+    await this.addPermission(queryRunner, 'User', 'ViewMessage');
+    await this.addPermission(queryRunner, 'User', 'ViewComment');
     //USER
-    await this.addRole(queryRunner, 'User', 'ViewSelfUser');
-    await this.addRole(queryRunner, 'User', 'ViewAnyUser');
-    await this.addRole(queryRunner, 'User', 'EditSelfMessage');
-    await this.addRole(queryRunner, 'User', 'EditSelfComment');
+    await this.addPermission(queryRunner, 'User', 'ViewSelfUser');
+    await this.addPermission(queryRunner, 'User', 'ViewAnyUser');
+    await this.addPermission(queryRunner, 'User', 'EditSelfMessage');
+    await this.addPermission(queryRunner, 'User', 'EditSelfComment');
   }
 
   private async insertAnonymousRole(queryRunner: QueryRunner) {
@@ -123,12 +123,12 @@ export class InitialRoles1614966539709 implements MigrationInterface {
       title: 'Anoymous Role',
       description: 'User role when no token provided',
     });
-    await this.addRole(queryRunner, 'Anonymous', 'RegisterUser');
-    await this.addRole(queryRunner, 'Anonymous', 'ViewCategory');
-    await this.addRole(queryRunner, 'Anonymous', 'ViewTopic');
-    await this.addRole(queryRunner, 'Anonymous', 'ViewSubtopic');
-    await this.addRole(queryRunner, 'Anonymous', 'ViewMessage');
-    await this.addRole(queryRunner, 'Anonymous', 'ViewComment');
+    await this.addPermission(queryRunner, 'Anonymous', 'RegisterUser');
+    await this.addPermission(queryRunner, 'Anonymous', 'ViewCategory');
+    await this.addPermission(queryRunner, 'Anonymous', 'ViewTopic');
+    await this.addPermission(queryRunner, 'Anonymous', 'ViewSubtopic');
+    await this.addPermission(queryRunner, 'Anonymous', 'ViewMessage');
+    await this.addPermission(queryRunner, 'Anonymous', 'ViewComment');
   }
 
   private async insertRole(
@@ -142,7 +142,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
         `);
   }
 
-  private async addRole(
+  private async addPermission(
     queryRunner: QueryRunner,
     permissionKey: string,
     roleKey: string,
