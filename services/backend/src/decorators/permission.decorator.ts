@@ -3,16 +3,37 @@ import { PermissionsKeys } from '../modules/auth/permissions/permissions-keys.co
 
 export const REQUIRE_PERMISSIONS_KEY = 'general_require_permissions_key';
 
-export type SinglePermissionConfig = PermissionsKeys;
+type SinglePermissionConfig = PermissionsKeys;
 
-export type GeneralPermissionConfig = PermissionsKeys[];
+type MultiPermissionConfig = PermissionsKeys[];
 
-export interface CustomPolicy {
+interface CustomPolicyConfig {
   anyEntityPermissions: PermissionsKeys[];
   ownEntityPermissions: PermissionsKeys[];
   entityName: string;
 }
 
-export const RequirePermissions = (
-  config: SinglePermissionConfig | GeneralPermissionConfig | CustomPolicy,
-) => SetMetadata(REQUIRE_PERMISSIONS_KEY, config);
+export type PermissionConfig =
+  | SinglePermissionConfig
+  | MultiPermissionConfig
+  | CustomPolicyConfig;
+
+export const isSinglePermissionConfig = (
+  config: PermissionConfig,
+): config is SinglePermissionConfig => {
+  return typeof config === 'string';
+};
+
+export const isGeneralMultiPermissionConfig = (
+  config: PermissionConfig,
+): config is MultiPermissionConfig => {
+  return Array.isArray(config);
+};
+
+export const isCustomPolictyConfig = (
+  config: PermissionConfig,
+): config is CustomPolicyConfig => {
+  return 'anyEntityPermissions' in (config as CustomPolicyConfig);
+};
+export const RequirePermissions = (config: PermissionConfig) =>
+  SetMetadata(REQUIRE_PERMISSIONS_KEY, config);

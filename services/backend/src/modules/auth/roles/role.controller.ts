@@ -22,19 +22,19 @@ export class RoleController {
   @Post()
   @RequirePermissions(PermissionsKeys.EditRoles)
   public async create(@Body() body: Role) {
-    return await this.roleService.create(body);
+    return await this.roleService.createEntity(body);
   }
 
   @Get(':id')
   @RequirePermissions(PermissionsKeys.ViewRoles)
   public async findOne(@Param() params: FindOneParams) {
-    return await this.roleService.findOne(params.id);
+    return await this.roleService.findOneEntity(params.id);
   }
 
   @Get()
   @RequirePermissions(PermissionsKeys.ViewRoles)
   public async findAll() {
-    return await this.roleService.findAll();
+    return await this.roleService.findAllEntities();
   }
 
   @Put('/:id')
@@ -46,6 +46,6 @@ export class RoleController {
   @Delete('/:id')
   @RequirePermissions(PermissionsKeys.EditRoles)
   public async delete(@Param() params: { id: string }) {
-    return await this.roleService.remove(params.id);
+    return await this.roleService.removeEntity(params.id);
   }
 }
