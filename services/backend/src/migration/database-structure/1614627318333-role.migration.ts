@@ -39,7 +39,7 @@ export class role1614627318333 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
-        name: 'role_permissions_permission',
+        name: 'role_permissions',
         columns: [
           {
             name: 'role_id',
@@ -57,26 +57,28 @@ export class role1614627318333 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'role_permissions_permission',
+      'role_permissions',
       new TableForeignKey({
         columnNames: ['role_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'role',
+        onDelete: 'CASCADE',
       }),
     );
 
     await queryRunner.createForeignKey(
-      'role_permissions_permission',
+      'role_permissions',
       new TableForeignKey({
         columnNames: ['permission_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'permission',
+        onDelete: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('role_permissions_permission');
+    await queryRunner.dropTable('role_permissions');
     await queryRunner.dropTable('role');
   }
 }

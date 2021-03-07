@@ -18,13 +18,17 @@ export class UserSeed1614972398323 implements MigrationInterface {
 
   private async insertUser(
     queryRunner: QueryRunner,
-    role: { username: string; email: string; password: string },
+    body: { username: string; email: string; password: string },
   ) {
     await queryRunner.query(`
             INSERT INTO "user"(
             id, username, email, password)
-            VALUES (uuid_generate_v4(), '${role.username}', '${role.email}', '${role.password}');
+            VALUES (uuid_generate_v4(), '${body.username}', '${body.email}', '${body.password}');
         `);
+    await queryRunner.query(`
+            UPDATE "user" 
+            SET owner_id = "user".id;
+    `);
   }
 
   private async addRole(

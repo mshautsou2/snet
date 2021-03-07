@@ -5,13 +5,13 @@ import { BaseCRUDRepository } from '../repositories/base-entity-repository';
 export abstract class BaseCRUDService<T extends BaseEntity> {
   protected abstract repository: BaseCRUDRepository<T>;
 
-  async createEntity(permission: T): Promise<T> {
-    this.beforeCreate(permission);
-    return await this.repository.save(permission as any);
+  async createEntity(entity: T): Promise<T> {
+    await this.beforeCreate(entity);
+    return await this.repository.saveEntity(entity as any);
   }
 
   findAllEntities(): Promise<T[]> {
-    return this.repository.find();
+    return this.repository.findAllEntities();
   }
 
   findOneEntity(id: string): Promise<T> {
@@ -23,20 +23,20 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
     return this.repository.findOne(options);
   }
 
-  async update(id: string, body: T): Promise<T> {
+  async update(id: string, body: Partial<T>): Promise<T> {
     this.beforeUpdate(body);
     return await this.repository.updateEntity(id, body);
   }
 
   async removeEntity(id: string): Promise<void> {
-    return await this.removeEntity(id);
+    return await this.repository.removeEntity(id);
   }
 
   protected async beforeCreate(entity: T) {
     return;
   }
 
-  protected async beforeUpdate(entity: T) {
+  protected async beforeUpdate(entity: Partial<T>) {
     return;
   }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserNotFoundError } from 'src/errors/user-not-found.error';
+import { UnauthorizedError } from 'src/errors/unauthorized.error';
 import { BaseCRUDService } from 'src/modules/shared/services/base-entity-service';
 import { UserPayload } from '../permissions/dto/user.payload';
 import { RolesKeys } from '../roles/roles-keys.constants';
 import { RolesService } from '../roles/roles.service';
-import { UserLoginDTO } from './dto/user-login.dto';
+import { UserLoginDto } from './dto/user-login.dto';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -20,17 +20,22 @@ export class UsersService extends BaseCRUDService<User> {
     super();
   }
 
-  protected async beforeCreate(user: User) {
+  async createEntity(user: User): Promise<User> {
     const mandatoryRole = await this.roleService.findByKey(RolesKeys.User);
     user.password = await bcrypt.hash(user.password, 10);
     user.roles = [mandatoryRole];
+    const result = await this.repository.saveEntity(user);
+    this.update(result.id, {
+      owner: user,
+    });
+    return await this.findOneEntity(result.id);
   }
 
   findAll(): Promise<User[]> {
     return this.repository.find();
   }
 
-  async loginUser(userDto: UserLoginDTO) {
+  async loginUser(userDto: UserLoginDto) {
     const user = await this.findByEmail(userDto.email);
     const authenticationPassed =
       user && bcrypt.compareSync(userDto.password, user.password);
@@ -41,6 +46,8 @@ export class UsersService extends BaseCRUDService<User> {
         userId: user.id,
         authToken,
       };
+    } else {
+      throw new UnauthorizedError('Invalid login or password');
     }
   }
 
@@ -49,14 +56,12 @@ export class UsersService extends BaseCRUDService<User> {
   }
 
   findByEmail(email: string): Promise<User | null> {
-    return this.repository.findEntityByCondition({
-      where: {
-        email,
-      },
+    return this.repository.findEntityByProperties({
+      email,
     });
   }
 
-  async getUserAuth(payload: UserPayload): Promise<User | UserNotFoundError> {
+  async getUserAuth(payload: UserPayload): Promise<User> {
     if (!payload) {
       return await this.getAnonymousUser();
     }

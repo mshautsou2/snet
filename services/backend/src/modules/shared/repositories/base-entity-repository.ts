@@ -4,7 +4,27 @@ import { BaseEntity } from '../entitiy/base.entity';
 export abstract class BaseCRUDRepository<
   T extends BaseEntity
 > extends Repository<T> {
-  abstract throwNotFoundError(identificationInfo: any): void;
+  protected abstract throwNotFoundError(identificationInfo: any): void;
+  protected abstract fromPartial(partial: Partial<T>): T;
+
+  async saveEntity(entity: T): Promise<T> {
+    const saveResult = await this.save(entity as any);
+    return this.fromPartial(saveResult as any);
+  }
+
+  async findEntityByProperties(properties: { [property: string]: string }) {
+    const result = await this.findOne({
+      where: properties,
+    });
+    if (!result) {
+      this.throwNotFoundError(
+        Object.entries(properties)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(),
+      );
+    }
+    return this.fromPartial(result);
+  }
 
   async findEntityByCondition(options?: FindOneOptions<T>): Promise<T> {
     const result = await this.findOne(options);
@@ -18,9 +38,15 @@ export abstract class BaseCRUDRepository<
     if (!result) {
       this.throwNotFoundError(id);
     }
-    return result;
+    return this.fromPartial(result);
   }
-  async updateEntity(id: string, body: T) {
+
+  async findAllEntities(): Promise<T[]> {
+    const result = await this.find();
+    return result.map((r) => this.fromPartial(r));
+  }
+
+  async updateEntity(id: string, body: Partial<T>) {
     const result = await this.update(id, body as any);
     if (result.affected === 0) {
       this.throwNotFoundError(id);

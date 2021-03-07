@@ -31,9 +31,24 @@ export class UserMigration1614972279876 implements MigrationInterface {
             name: 'password',
             type: 'varchar',
           },
+          {
+            name: 'owner_id',
+            type: 'uuid',
+            isNullable: true,
+          },
         ],
       }),
       true,
+    );
+
+    await queryRunner.createForeignKey(
+      'user',
+      new TableForeignKey({
+        columnNames: ['owner_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'user',
+        onDelete: 'CASCADE',
+      }),
     );
 
     await queryRunner.createTable(
@@ -61,6 +76,7 @@ export class UserMigration1614972279876 implements MigrationInterface {
         columnNames: ['user_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
+        onDelete: 'CASCADE',
       }),
     );
 
@@ -70,6 +86,7 @@ export class UserMigration1614972279876 implements MigrationInterface {
         columnNames: ['role_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'role',
+        onDelete: 'CASCADE',
       }),
     );
   }

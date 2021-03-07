@@ -27,6 +27,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addPermission(queryRunner, 'Root', 'ViewMessage');
     await this.addPermission(queryRunner, 'Root', 'ViewComment');
     //USER
+    await this.addPermission(queryRunner, 'Root', 'EditSelfUser');
     await this.addPermission(queryRunner, 'Root', 'ViewSelfUser');
     await this.addPermission(queryRunner, 'Root', 'ViewAnyUser');
     await this.addPermission(queryRunner, 'Root', 'EditSelfMessage');
@@ -44,6 +45,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addPermission(queryRunner, 'Root', 'ViewRoles');
     await this.addPermission(queryRunner, 'Root', 'EditRoles');
     await this.addPermission(queryRunner, 'Root', 'EditAnyCategory');
+    await this.addPermission(queryRunner, 'Root', 'EditAnyUser');
   }
 
   private async insertAdminRole(queryRunner: QueryRunner) {
@@ -61,6 +63,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addPermission(queryRunner, 'Admin', 'ViewMessage');
     await this.addPermission(queryRunner, 'Admin', 'ViewComment');
     //USER
+    await this.addPermission(queryRunner, 'Admin', 'EditSelfUser');
     await this.addPermission(queryRunner, 'Admin', 'ViewSelfUser');
     await this.addPermission(queryRunner, 'Admin', 'ViewAnyUser');
     await this.addPermission(queryRunner, 'Admin', 'EditSelfMessage');
@@ -88,6 +91,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addPermission(queryRunner, 'Moderator', 'ViewMessage');
     await this.addPermission(queryRunner, 'Moderator', 'ViewComment');
     //USER
+    await this.addPermission(queryRunner, 'Moderator', 'EditSelfUser');
     await this.addPermission(queryRunner, 'Moderator', 'ViewSelfUser');
     await this.addPermission(queryRunner, 'Moderator', 'ViewAnyUser');
     await this.addPermission(queryRunner, 'Moderator', 'EditSelfMessage');
@@ -111,6 +115,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     await this.addPermission(queryRunner, 'User', 'ViewMessage');
     await this.addPermission(queryRunner, 'User', 'ViewComment');
     //USER
+    await this.addPermission(queryRunner, 'User', 'EditSelfUser');
     await this.addPermission(queryRunner, 'User', 'ViewSelfUser');
     await this.addPermission(queryRunner, 'User', 'ViewAnyUser');
     await this.addPermission(queryRunner, 'User', 'EditSelfMessage');
@@ -148,7 +153,7 @@ export class InitialRoles1614966539709 implements MigrationInterface {
     roleKey: string,
   ) {
     await queryRunner.query(`
-      INSERT INTO public.role_permissions_permission(role_id, permission_id)
+      INSERT INTO public.role_permissions(role_id, permission_id)
       VALUES (
               (SELECT id FROM "role" WHERE key = '${permissionKey}'),
               (SELECT id FROM "permission" WHERE key = '${roleKey}')

@@ -1,3 +1,3 @@
 export class AppError {
-  constructor(public message) {}
+  constructor(public message?) {}
 }

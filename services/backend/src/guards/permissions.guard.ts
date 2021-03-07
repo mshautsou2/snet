@@ -7,7 +7,7 @@ import {
   isMultiPermissionConfig,
   isSinglePermissionConfig,
   PermissionConfig,
-  REQUIRE_PERMISSIONS_KEY,
+  REQUIRE_PERMISSIONS_KEY
 } from '../decorators/permission.decorator';
 import { RolesService } from '../modules/auth/roles/roles.service';
 
@@ -45,13 +45,17 @@ export class PermissionsGuard implements CanActivate {
     if (isCustomPolictyConfig(permissionConfig)) {
       const resourceId = request.params?.id;
       const {
-        entityName,
+        entityClass,
         anyEntityPermissions,
         ownEntityPermissions,
       } = permissionConfig;
       const isOwner =
         resourceId &&
-        (await this.permissionService.isOwner(entityName, resourceId, user.id));
+        (await this.permissionService.isOwner(
+          entityClass,
+          resourceId,
+          user.id,
+        ));
 
       if (isOwner) {
         return await this.rolesService.hasPermissions(

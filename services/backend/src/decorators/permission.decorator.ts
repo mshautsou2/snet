@@ -1,4 +1,6 @@
-import { SetMetadata } from '@nestjs/common';
+import { applyDecorators, SetMetadata } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { ClassType } from 'src/modules/shared/types/class.type';
 import { PermissionsKeys } from '../modules/auth/permissions/permissions-keys.constants';
 
 export const REQUIRE_PERMISSIONS_KEY = 'general_require_permissions_key';
@@ -10,7 +12,7 @@ type MultiPermissionConfig = PermissionsKeys[];
 interface CustomPolicyConfig {
   anyEntityPermissions: PermissionsKeys[];
   ownEntityPermissions: PermissionsKeys[];
-  entityName: string;
+  entityClass: ClassType;
 }
 
 export type PermissionConfig =
@@ -36,4 +38,7 @@ export const isCustomPolictyConfig = (
   return 'anyEntityPermissions' in (config as CustomPolicyConfig);
 };
 export const RequirePermissions = (config: PermissionConfig) =>
-  SetMetadata(REQUIRE_PERMISSIONS_KEY, config);
+  applyDecorators(
+    SetMetadata(REQUIRE_PERMISSIONS_KEY, config),
+    ApiBearerAuth(),
+  );

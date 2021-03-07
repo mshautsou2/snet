@@ -20,9 +20,14 @@ export class Role extends BaseEntity {
 
   @ManyToMany(() => Permission)
   @JoinTable({
-    name: 'role_permissions_permission',
+    name: 'role_permissions',
     joinColumn: { name: 'role_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'permission_id', referencedColumnName: 'id' },
   })
   permissions: Permission[];
+
+  constructor(body: Partial<Role>) {
+    super();
+    Object.assign(this, body);
+  }
 }

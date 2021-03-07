@@ -1,4 +1,4 @@
-import { EntityNotFoundError } from 'src/errors/entity-not-found.error';
+import { ModelNotFoundError } from 'src/errors/entity-not-found.error';
 import { BaseCRUDRepository } from 'src/modules/shared/repositories/base-entity-repository';
 import { EntityRepository, getConnection } from 'typeorm';
 import { PermissionsKeys } from '../permissions/permissions-keys.constants';
@@ -42,7 +42,15 @@ export class RoleRepository extends BaseCRUDRepository<Role> {
     return result;
   }
 
-  throwNotFoundError(info) {
-    throw new EntityNotFoundError('Role', info);
+  getClass() {
+    return Role;
+  }
+
+  protected throwNotFoundError(info) {
+    throw new ModelNotFoundError('Role', info);
+  }
+
+  protected fromPartial(entity) {
+    return new Role(entity);
   }
 }

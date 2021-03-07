@@ -1,7 +1,7 @@
 import { NotFoundError } from './core/not-found.error';
 
-export class EntityNotFoundError extends NotFoundError {
+export class ModelNotFoundError extends NotFoundError {
   constructor(public entity: string, public identifier: string) {
-    super(`${entity} "${identifier}" not found`);
+    super(`${entity} with "${identifier}" not found`);
   }
 }

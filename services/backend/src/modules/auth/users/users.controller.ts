@@ -8,10 +8,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'src/decorators/permission.decorator';
 import { FindOneParams } from 'src/modules/shared/dto/find-one.dto';
 import { PermissionsKeys } from '../permissions/permissions-keys.constants';
+import { UserLoginDto } from './dto/user-login.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -22,12 +23,12 @@ export class UsersController {
 
   @Post('register')
   async registerUser(@Body() user: User) {
-    return await this.userService.createEntity(user);
+    return new User(await this.userService.createEntity(user));
   }
 
   @Post('login')
   @HttpCode(200)
-  async loginUser(@Body() userDto: User) {
+  async loginUser(@Body() userDto: UserLoginDto) {
     return await this.userService.loginUser(userDto);
   }
 
@@ -35,7 +36,7 @@ export class UsersController {
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.ViewAnyUser],
     ownEntityPermissions: [PermissionsKeys.ViewSelfUser],
-    entityName: 'user',
+    entityClass: User,
   })
   public async findOne(@Param() params: FindOneParams) {
     return await this.userService.findOneEntity(params.id);
@@ -51,19 +52,19 @@ export class UsersController {
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.EditAnyUser],
     ownEntityPermissions: [PermissionsKeys.EditSelfUser],
-    entityName: 'user',
+    entityClass: User,
   })
-  async update(@Param('id') roleId: string, @Body() role: User) {
-    return await this.userService.update(roleId, role);
+  async update(@Param('id') entityId: string, @Body() user: User) {
+    return await this.userService.update(entityId, user);
   }
 
   @Delete('/:id')
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.EditAnyUser],
     ownEntityPermissions: [PermissionsKeys.EditSelfUser],
-    entityName: 'user',
+    entityClass: User,
   })
-  public async delete(@Param() params: { id: string }) {
-    return await this.userService.removeEntity(params.id);
+  public async delete(@Param('id') entityId: string) {
+    return await this.userService.removeEntity(entityId);
   }
 }

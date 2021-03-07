@@ -1,5 +1,6 @@
+import { ModelNotFoundError } from 'src/errors/entity-not-found.error';
 import { BaseCRUDRepository } from 'src/modules/shared/repositories/base-entity-repository';
-import { EntityNotFoundError, EntityRepository, getConnection } from 'typeorm';
+import { EntityRepository, getConnection } from 'typeorm';
 import { User } from './user.entity';
 
 @EntityRepository(User)
@@ -12,7 +13,11 @@ export class UserRepository extends BaseCRUDRepository<User> {
       .add(roleId);
   }
 
-  throwNotFoundError(info) {
-    throw new EntityNotFoundError('User', info);
+  protected throwNotFoundError(info) {
+    throw new ModelNotFoundError('User', info);
   }
+  protected fromPartial(entity) {
+    return new User(entity);
+  }
+
 }

@@ -25,7 +25,6 @@ import { UsersController } from './auth/users/users.controller';
     // CommentsModule,
     // ChatModule,
   ],
-  providers: [{ provide: 'APP_GUARD', useClass: PermissionsGuard }],
   controllers: [UsersController, PermissionController, RoleController],
 })
 export class AppModule {
