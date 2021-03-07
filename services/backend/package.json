@@ -86,14 +86,13 @@
       "ts"
     ],
     "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "modulePaths": [
+      "<rootDir>/"
+    ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "<rootDir>/../coverage",
     "testEnvironment": "node"
   }
 }

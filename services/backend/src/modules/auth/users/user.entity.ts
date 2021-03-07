@@ -8,9 +8,12 @@ import {
   JoinTable,
   ManyToMany,
   OneToOne,
-  Unique,
+  Unique
 } from 'typeorm';
 import { Role } from '../roles/role.entity';
+
+export const returnUser = () => User;
+export const returnRole = () => Role;
 
 @Entity()
 @Unique(['email'])
@@ -29,12 +32,12 @@ export class User extends BaseEntity {
   password: string;
 
   @Exclude()
-  @OneToOne(() => User)
+  @OneToOne(returnUser)
   @JoinColumn({ name: 'owner_id' })
   owner: User;
 
   @Exclude()
-  @ManyToMany(() => Role)
+  @ManyToMany(returnRole)
   @JoinTable({
     name: 'user_roles',
     joinColumn: { name: 'user_id', referencedColumnName: 'id' },

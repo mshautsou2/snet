@@ -19,5 +19,4 @@ export class UserRepository extends BaseCRUDRepository<User> {
   protected fromPartial(entity) {
     return new User(entity);
   }
-
 }
