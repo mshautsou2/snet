@@ -1,6 +1,6 @@
-import { ModelNotFoundError } from 'src/errors/entity-not-found.error';
-import { BaseCRUDRepository } from 'src/modules/shared/repositories/base-entity-repository';
-import { ClassType } from 'src/modules/shared/types/class.type';
+import { ModelNotFoundError } from 'errors/entity-not-found.error';
+import { BaseCRUDRepository } from 'modules/shared/repositories/base-entity-repository';
+import { ClassType } from 'modules/shared/types/class.type';
 import { EntityRepository, getRepository } from 'typeorm';
 import { Permission } from './permission.entity';
 

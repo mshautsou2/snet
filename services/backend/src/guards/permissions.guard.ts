@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { PermissionService } from 'src/modules/auth/permissions/permission.service';
-import { User } from 'src/modules/auth/users/user.entity';
+import { PermissionService } from 'modules/auth/permissions/permission.service';
+import { User } from 'modules/auth/users/user.entity';
 import {
   isCustomPolictyConfig,
   isMultiPermissionConfig,

@@ -1,5 +1,5 @@
-import { ModelNotFoundError } from 'src/errors/entity-not-found.error';
-import { BaseCRUDRepository } from 'src/modules/shared/repositories/base-entity-repository';
+import { ModelNotFoundError } from 'errors/entity-not-found.error';
+import { BaseCRUDRepository } from 'modules/shared/repositories/base-entity-repository';
 import { EntityRepository, getConnection } from 'typeorm';
 import { User } from './user.entity';
 

@@ -1,9 +1,8 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import databaseConfig from 'src/config/database.config';
-import { PermissionsGuard } from 'src/guards/permissions.guard';
-import { UserMiddleware } from 'src/middleware/user.middleware';
+import databaseConfig from 'config/database.config';
+import { UserMiddleware } from 'middleware/user.middleware';
 import { AuthModule } from './auth/auth.module';
 import { PermissionController } from './auth/permissions/permission.controller';
 import { RoleController } from './auth/roles/role.controller';

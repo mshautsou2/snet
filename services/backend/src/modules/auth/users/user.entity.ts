@@ -1,13 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { BaseEntity } from 'src/modules/shared/entitiy/base.entity';
+import { BaseEntity } from 'modules/shared/entitiy/base.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
   OneToOne,
   Unique,
 } from 'typeorm';

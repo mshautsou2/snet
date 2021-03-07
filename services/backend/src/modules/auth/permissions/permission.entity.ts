@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from 'src/modules/shared/entitiy/base.entity';
+import { BaseEntity } from 'modules/shared/entitiy/base.entity';
 import { Column, Entity, Unique } from 'typeorm';
 
 @Entity({ name: 'permission' })

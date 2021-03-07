@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseCRUDService } from 'src/modules/shared/services/base-entity-service';
+import { BaseCRUDService } from 'modules/shared/services/base-entity-service';
 import { PermissionsKeys } from '../permissions/permissions-keys.constants';
 import { Role } from './role.entity';
 import { RoleRepository } from './role.repository';

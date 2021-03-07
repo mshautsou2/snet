@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UnauthorizedError } from 'src/errors/unauthorized.error';
-import { BaseCRUDService } from 'src/modules/shared/services/base-entity-service';
+import { UnauthorizedError } from 'errors/unauthorized.error';
+import { BaseCRUDService } from 'modules/shared/services/base-entity-service';
 import { UserPayload } from '../permissions/dto/user.payload';
 import { RolesKeys } from '../roles/roles-keys.constants';
 import { RolesService } from '../roles/roles.service';

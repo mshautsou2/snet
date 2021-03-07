@@ -1,4 +1,4 @@
-import { User } from 'src/modules/auth/users/user.entity';
+import { User } from 'modules/auth/users/user.entity';
 import { JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export abstract class WithOwnerEntity {

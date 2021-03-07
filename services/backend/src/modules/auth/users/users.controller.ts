@@ -8,9 +8,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { RequirePermissions } from 'src/decorators/permission.decorator';
-import { FindOneParams } from 'src/modules/shared/dto/find-one.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { RequirePermissions } from 'decorators/permission.decorator';
+import { FindOneParams } from 'modules/shared/dto/find-one.dto';
 import { PermissionsKeys } from '../permissions/permissions-keys.constants';
 import { UserLoginDto } from './dto/user-login.dto';
 import { User } from './user.entity';

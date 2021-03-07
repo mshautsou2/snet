@@ -1,5 +1,5 @@
 import Faker from 'faker';
-import { Permission } from 'src/modules/auth/permissions/permission.entity';
+import { Permission } from 'modules/auth/permissions/permission.entity';
 import { define } from 'typeorm-seeding';
 
 define(Permission, (faker: typeof Faker) => {

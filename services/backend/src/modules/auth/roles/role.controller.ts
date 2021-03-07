@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { FindOneParams } from 'src/modules/shared/dto/find-one.dto';
+import { FindOneParams } from 'modules/shared/dto/find-one.dto';
 import { RequirePermissions } from '../../../decorators/permission.decorator';
 import { PermissionsKeys } from '../permissions/permissions-keys.constants';
 import { Role } from './role.entity';

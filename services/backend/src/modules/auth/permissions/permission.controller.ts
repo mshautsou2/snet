@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { FindOneParams } from 'src/modules/shared/dto/find-one.dto';
+import { FindOneParams } from 'modules/shared/dto/find-one.dto';
 import { RequirePermissions } from '../../../decorators/permission.decorator';
 import { PermissionService } from './permission.service';
 import { PermissionsKeys } from './permissions-keys.constants';

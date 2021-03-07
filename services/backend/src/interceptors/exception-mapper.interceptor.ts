@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ModelNotFoundError } from 'src/errors/entity-not-found.error';
-import { UnauthorizedError } from 'src/errors/unauthorized.error';
+import { ModelNotFoundError } from 'errors/entity-not-found.error';
+import { UnauthorizedError } from 'errors/unauthorized.error';
 
 @Injectable()
 export class ExceptionMapperInterceptor implements NestInterceptor {
