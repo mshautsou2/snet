@@ -20,6 +20,7 @@ export class Subtopic extends BaseEntity {
   description: string;
 
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'topic_id' })
   topic: Topic;
 
   @OneToMany(() => Message, (t: Message) => t.subtopic)

@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
 import { IsString } from 'class-validator';
 import { User } from 'modules/auth/users/user.entity';
 import { BaseEntity } from 'modules/shared/entitiy/base.entity';
@@ -19,8 +18,6 @@ export class Topic extends BaseEntity {
   @Column()
   description: string;
 
-  // @ApiProperty({ required: true, type: 'string', name: 'categoryId' })
-  // @IsString()
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'category_id' })
   category: Category;

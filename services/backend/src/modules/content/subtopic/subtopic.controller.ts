@@ -9,48 +9,58 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'decorators/permission.decorator';
+import { WithOwner } from 'decorators/with-owner.decorator';
 import { PermissionsKeys } from 'modules/auth/permissions/permissions-keys.constants';
 import { FindOneParams } from 'modules/shared/dto/find-one.dto';
+import { Topic } from '../topic/topic.entity';
+import { CreateSubtopicParams } from './dto/create-subtopic.params';
+import { UpdateTopicParams } from './dto/update-subtopic.params';
 import { Subtopic } from './subtopic.entity';
 import { SubtopicService } from './subtopic.service';
 
-@Controller('subtopics')
+@Controller('')
 @ApiTags('subtopics')
 export class SubtopicController {
   constructor(private readonly service: SubtopicService) {}
 
-  @Post()
-  @RequirePermissions(PermissionsKeys.EditSelfSubTopic)
-  public async create(@Body() body: Subtopic) {
+  @Post('/topics/:topicId/subtopics')
+  @WithOwner()
+  @RequirePermissions(PermissionsKeys.ViewTopic)
+  public async create(
+    @Body() body: Subtopic,
+    @Param() params: CreateSubtopicParams,
+  ) {
+    body.topic = (params.topicId as unknown) as Topic;
     return await this.service.createEntity(body);
   }
 
-  @Get(':id')
-  @RequirePermissions(PermissionsKeys.ViewSubTopic)
+  @Get('/subtopics/:id')
+  @RequirePermissions(PermissionsKeys.ViewTopic)
   public async findOne(@Param() params: FindOneParams) {
     return await this.service.findOneEntity(params.id);
   }
 
-  @Get()
-  @RequirePermissions(PermissionsKeys.ViewSubTopic)
+  @Get('/subtopics/')
+  @RequirePermissions(PermissionsKeys.ViewTopic)
   public async findAll() {
     return await this.service.findAllEntities();
   }
 
-  @Put('/:id')
+  @Put('/topics/:topicId/subtopics/:id')
+  @WithOwner()
   @RequirePermissions({
-    anyEntityPermissions: [PermissionsKeys.EditAnySubTopic],
-    ownEntityPermissions: [PermissionsKeys.EditSelfSubTopic],
+    anyEntityPermissions: [PermissionsKeys.ViewSubTopic],
+    ownEntityPermissions: [PermissionsKeys.ViewSubTopic],
     entityClass: Subtopic,
   })
-  async update(@Param('id') entityId: string, @Body() user: Subtopic) {
-    return await this.service.update(entityId, user);
+  async update(@Body() subtopic: Subtopic, @Param() params: UpdateTopicParams) {
+    return await this.service.update(params.id, subtopic);
   }
 
-  @Delete('/:id')
+  @Delete('/subtopics/:id')
   @RequirePermissions({
-    anyEntityPermissions: [PermissionsKeys.EditAnyTopic],
-    ownEntityPermissions: [PermissionsKeys.EditSelfTopic],
+    anyEntityPermissions: [PermissionsKeys.ViewSubTopic],
+    ownEntityPermissions: [PermissionsKeys.ViewSubTopic],
     entityClass: Subtopic,
   })
   public async delete(@Param('id') entityId: string) {

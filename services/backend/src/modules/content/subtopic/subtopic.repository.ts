@@ -5,8 +5,8 @@ import { Subtopic } from './subtopic.entity';
 
 @EntityRepository(Subtopic)
 export class SubtopicRepository extends BaseCRUDRepository<Subtopic> {
-  async findById(id: string) {
-    return await this.findOne(id, {
+  async findEntity(id: string) {
+    const result = await this.findOne(id, {
       join: {
         alias: 'subtopic',
         leftJoinAndSelect: {
@@ -14,6 +14,10 @@ export class SubtopicRepository extends BaseCRUDRepository<Subtopic> {
         },
       },
     });
+    if (!result) {
+      this.throwNotFoundError(id);
+    }
+    return this.fromPartial(result);
   }
 
   protected throwNotFoundError(info: any) {
