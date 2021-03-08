@@ -5,8 +5,8 @@ import { EntityRepository } from 'typeorm';
 
 @EntityRepository(Category)
 export class CategoryRepository extends BaseCRUDRepository<Category> {
-  async findById(id: string) {
-    return await this.findOne(id, {
+  async findEntity(id: string): Promise<Category> {
+    const result = await this.findOne(id, {
       join: {
         alias: 'category',
         leftJoinAndSelect: {
@@ -14,6 +14,10 @@ export class CategoryRepository extends BaseCRUDRepository<Category> {
         },
       },
     });
+    if (!result) {
+      this.throwNotFoundError(id);
+    }
+    return this.fromPartial(result);
   }
 
   protected throwNotFoundError(info) {

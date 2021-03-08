@@ -8,5 +8,7 @@
 
 4. Tests
 
+# optional
 5. Check this project structure https://medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs-a06c7a641401
 6. can be refactored with nested REST routes https://stackoverflow.com/questions/50438986/how-to-create-nested-routes-with-parameters-using-nestjs
+7. add patch

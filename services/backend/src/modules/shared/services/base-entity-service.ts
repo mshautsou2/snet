@@ -15,7 +15,7 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
   }
 
   findOneEntity(id: string): Promise<T> {
-    return this.repository.findOne(id);
+    return this.repository.findEntity(id);
   }
 
   findByConditions(options: FindOneOptions<T>): Promise<T> {
