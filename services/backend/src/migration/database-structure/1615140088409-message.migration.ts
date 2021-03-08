@@ -26,6 +26,7 @@ export class MessageMigration1615140088409 implements MigrationInterface {
           {
             name: 'timestamp',
             type: 'timestamp',
+            default: 'now()',
           },
           {
             name: 'subtopic_id',

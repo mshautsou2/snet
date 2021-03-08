@@ -5,8 +5,8 @@ import { Message } from './message.entity';
 
 @EntityRepository(Message)
 export class MessageRepository extends BaseCRUDRepository<Message> {
-  async findById(id: string) {
-    return await this.findOne(id, {
+  async findEntity(id: string) {
+    const result = await this.findOne(id, {
       join: {
         alias: 'message',
         leftJoinAndSelect: {
@@ -14,6 +14,10 @@ export class MessageRepository extends BaseCRUDRepository<Message> {
         },
       },
     });
+    if (!result) {
+      this.throwNotFoundError(id);
+    }
+    return this.fromPartial(result);
   }
 
   protected throwNotFoundError(info) {

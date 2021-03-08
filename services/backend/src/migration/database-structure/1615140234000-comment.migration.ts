@@ -26,6 +26,7 @@ export class CommentMigration1615140234000 implements MigrationInterface {
           {
             name: 'timestamp',
             type: 'timestamp',
+            default: 'now()',
           },
           {
             name: 'message_id',

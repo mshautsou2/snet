@@ -9,45 +9,56 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'decorators/permission.decorator';
+import { WithOwner } from 'decorators/with-owner.decorator';
 import { PermissionsKeys } from 'modules/auth/permissions/permissions-keys.constants';
 import { FindOneParams } from 'modules/shared/dto/find-one.dto';
+import { Subtopic } from '../subtopic/subtopic.entity';
+import { CreateMessageParams } from './dto/create-message.params';
+import { UpdateMessageParams } from './dto/update-message.params';
 import { Message } from './message.entity';
 import { MessageService } from './message.service';
 
-@Controller('messages')
+@Controller('')
 @ApiTags('messages')
 export class MessageController {
   constructor(private readonly service: MessageService) {}
 
-  @Post()
-  @RequirePermissions(PermissionsKeys.EditSelfMessage)
-  public async create(@Body() body: Message) {
+  @Post('/subtopics/:subtopicId/messages')
+  @WithOwner()
+  // @RequirePermissions(PermissionsKeys.ViewTopic)
+  public async create(
+    @Body() body: Message,
+    @Param() params: CreateMessageParams,
+  ) {
+    body.subtopic = (params.subtopicId as unknown) as Subtopic;
     return await this.service.createEntity(body);
   }
 
-  @Get(':id')
+  @Get('/messages/:id')
   @RequirePermissions(PermissionsKeys.ViewMessage)
   public async findOne(@Param() params: FindOneParams) {
     return await this.service.findOneEntity(params.id);
   }
 
-  @Get()
+  @Get('/messages/')
   @RequirePermissions(PermissionsKeys.ViewMessage)
   public async findAll() {
     return await this.service.findAllEntities();
   }
 
-  @Put('/:id')
+  @Put('/subtopics/:subtopicId/messages/:id')
+  @WithOwner()
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.EditAnyMessage],
     ownEntityPermissions: [PermissionsKeys.EditSelfMessage],
     entityClass: Message,
   })
-  async update(@Param('id') entityId: string, @Body() user: Message) {
-    return await this.service.update(entityId, user);
+  async update(@Body() message: Message, @Param() params: UpdateMessageParams) {
+    message.subtopic = (params.subtopicId as unknown) as Subtopic;
+    return await this.service.update(params.id, message);
   }
 
-  @Delete('/:id')
+  @Delete('/messages/:id')
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.EditAnyMessage],
     ownEntityPermissions: [PermissionsKeys.EditSelfMessage],

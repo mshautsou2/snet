@@ -35,13 +35,13 @@ export class SubtopicController {
   }
 
   @Get('/subtopics/:id')
-  @RequirePermissions(PermissionsKeys.ViewTopic)
+  // @RequirePermissions(PermissionsKeys.ViewTopic)
   public async findOne(@Param() params: FindOneParams) {
     return await this.service.findOneEntity(params.id);
   }
 
   @Get('/subtopics/')
-  @RequirePermissions(PermissionsKeys.ViewTopic)
+  // @RequirePermissions(PermissionsKeys.ViewTopic)
   public async findAll() {
     return await this.service.findAllEntities();
   }
@@ -54,6 +54,7 @@ export class SubtopicController {
     entityClass: Subtopic,
   })
   async update(@Body() subtopic: Subtopic, @Param() params: UpdateTopicParams) {
+    subtopic.topic = (params.topicId as unknown) as Topic;
     return await this.service.update(params.id, subtopic);
   }
 
