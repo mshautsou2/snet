@@ -18,7 +18,7 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 @ApiTags('users')
-export class UsersController {
+export class UserController {
   constructor(private userService: UsersService) {}
 
   @Post('register')

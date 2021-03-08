@@ -3,16 +3,16 @@ import { Test } from '@nestjs/testing';
 import { RolesService } from 'modules/auth/roles/roles.service';
 import { User } from '../user.entity';
 import { UserRepository } from '../user.repository';
-import { UsersController } from '../users.controller';
+import { UserController } from '../users.controller';
 import { UsersService } from '../users.service';
 
 describe('UserController', () => {
-  let userController: UsersController;
+  let userController: UserController;
   let userService: UsersService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      controllers: [UsersController],
+      controllers: [UserController],
       providers: [
         UsersService,
         { provide: JwtService, useValue: {} },
@@ -21,7 +21,7 @@ describe('UserController', () => {
       ],
     }).compile();
     userService = moduleRef.get<UsersService>(UsersService);
-    userController = moduleRef.get<UsersController>(UsersController);
+    userController = moduleRef.get<UserController>(UserController);
   });
 
   describe('findAll', () => {

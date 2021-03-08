@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoleModule } from '../roles/role.module';
 import { UserRepository } from './user.repository';
-import { UsersController } from './users.controller';
+import { UserController } from './users.controller';
 import { UsersService } from './users.service';
 
 @Module({
@@ -15,8 +15,8 @@ import { UsersService } from './users.service';
     }),
     RoleModule,
   ],
-  providers: [UsersService, UsersController],
-  exports: [UsersService, UsersController],
+  providers: [UsersService, UserController],
+  exports: [UsersService, UserController],
 })
 export class UsersModule {
   constructor(private userService: UsersService) {}

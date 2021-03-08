@@ -7,7 +7,7 @@ import {
   isMultiPermissionConfig,
   isSinglePermissionConfig,
   PermissionConfig,
-  REQUIRE_PERMISSIONS_KEY
+  REQUIRE_PERMISSIONS_DECORATOR_KEY,
 } from '../decorators/permission.decorator';
 import { RolesService } from '../modules/auth/roles/roles.service';
 
@@ -24,7 +24,7 @@ export class PermissionsGuard implements CanActivate {
     const user: User = request.user;
 
     const permissionConfig = this.reflector.getAllAndOverride<PermissionConfig>(
-      REQUIRE_PERMISSIONS_KEY,
+      REQUIRE_PERMISSIONS_DECORATOR_KEY,
       [context.getHandler(), context.getClass()],
     );
     if (!permissionConfig) {

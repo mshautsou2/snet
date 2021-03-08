@@ -4,6 +4,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as csurf from 'csurf';
 import * as session from 'express-session';
+import { WithOwnerInterceptor } from 'interceptors/with-owner.interceptor';
 import { PermissionsGuard } from './guards/permissions.guard';
 import { ExceptionMapperInterceptor } from './interceptors/exception-mapper.interceptor';
 import { AppModule } from './modules/app.module';
@@ -25,6 +26,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(
     new ExceptionMapperInterceptor(),
     new ClassSerializerInterceptor(reflectorService),
+    new WithOwnerInterceptor(reflectorService),
   );
   const DEV_ENVIRONMENT = config.get('NODE_ENV') === 'development';
 

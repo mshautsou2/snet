@@ -3,7 +3,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { ClassType } from 'modules/shared/types/class.type';
 import { PermissionsKeys } from '../modules/auth/permissions/permissions-keys.constants';
 
-export const REQUIRE_PERMISSIONS_KEY = 'general_require_permissions_key';
+export const REQUIRE_PERMISSIONS_DECORATOR_KEY =
+  'general_require_permissions_decorator_key';
 
 type SinglePermissionConfig = PermissionsKeys;
 
@@ -39,6 +40,6 @@ export const isCustomPolictyConfig = (
 };
 export const RequirePermissions = (config: PermissionConfig) =>
   applyDecorators(
-    SetMetadata(REQUIRE_PERMISSIONS_KEY, config),
+    SetMetadata(REQUIRE_PERMISSIONS_DECORATOR_KEY, config),
     ApiBearerAuth(),
   );
