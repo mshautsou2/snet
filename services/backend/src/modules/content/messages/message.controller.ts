@@ -25,7 +25,7 @@ export class MessageController {
 
   @Post('/subtopics/:subtopicId/messages')
   @WithOwner()
-  // @RequirePermissions(PermissionsKeys.ViewTopic)
+  @RequirePermissions(PermissionsKeys.ViewTopic)
   public async create(
     @Body() body: Message,
     @Param() params: CreateMessageParams,
@@ -35,13 +35,13 @@ export class MessageController {
   }
 
   @Get('/messages/:id')
-  @RequirePermissions(PermissionsKeys.ViewMessage)
+  @RequirePermissions(PermissionsKeys.ViewCategory)
   public async findOne(@Param() params: FindOneParams) {
     return await this.service.findOneEntity(params.id);
   }
 
   @Get('/messages/')
-  @RequirePermissions(PermissionsKeys.ViewMessage)
+  @RequirePermissions(PermissionsKeys.ViewCategory)
   public async findAll() {
     return await this.service.findAllEntities();
   }

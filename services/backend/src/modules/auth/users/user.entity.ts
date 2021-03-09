@@ -8,7 +8,7 @@ import {
   JoinTable,
   ManyToMany,
   OneToOne,
-  Unique
+  Unique,
 } from 'typeorm';
 import { Role } from '../roles/role.entity';
 

@@ -21,7 +21,7 @@ export class Message extends BaseEntity {
   subtopic: Subtopic;
 
   @OneToMany(() => Comment, (c: Comment) => c.message)
-  comments: Message[];
+  comments: Comment[];
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'owner_id' })

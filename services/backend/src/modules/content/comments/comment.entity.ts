@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { User } from 'modules/auth/users/user.entity';
 import { BaseEntity } from 'modules/shared/entitiy/base.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Message } from '../messages/message.entity';
 
 @Entity({ name: 'comment' })
@@ -16,9 +16,11 @@ export class Comment extends BaseEntity {
   timestamp: string;
 
   @ManyToOne(() => Message, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'message_id' })
   message: Message;
 
   @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'owner_id' })
   owner: User;
 
   constructor(raw: Partial<Comment>) {
