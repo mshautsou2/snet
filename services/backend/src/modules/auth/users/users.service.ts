@@ -32,7 +32,7 @@ export class UsersService extends BaseCRUDService<User> {
   }
 
   findAll(): Promise<User[]> {
-    return this.repository.find();
+    return this.repository.findAllEntities();
   }
 
   async loginUser(userDto: UserLoginDto) {
