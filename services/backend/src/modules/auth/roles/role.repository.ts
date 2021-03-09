@@ -17,6 +17,16 @@ export class RoleRepository extends BaseCRUDRepository<Role> {
   }
 
   async hasPermissions(userId: string, ...permissions: PermissionsKeys[]) {
+    const query = await getConnection()
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .where('user.id = :userId', { userId })
+      .leftJoin('user.roles', 'role')
+      .leftJoin('role.permissions', 'permission')
+      .andWhere('permission.key IN (:...permissions)', { permissions })
+      .select('TOP 1')
+      .getQuery();
+    console.log(query);
     const result =
       (await getConnection()
         .getRepository(User)

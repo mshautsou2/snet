@@ -18,6 +18,7 @@ export class Topic extends BaseEntity {
   @Column()
   description: string;
 
+  @ApiProperty({ required: true, type: 'string', name: 'categoryId' })
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'category_id' })
   category: Category;

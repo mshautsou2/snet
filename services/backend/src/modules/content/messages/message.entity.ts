@@ -16,6 +16,7 @@ export class Message extends BaseEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: string;
 
+  @ApiProperty({ required: true, type: 'string', name: 'subtopicId' })
   @ManyToOne(() => Subtopic, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'subtopic_id' })
   subtopic: Subtopic;

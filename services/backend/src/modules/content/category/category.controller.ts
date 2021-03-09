@@ -11,7 +11,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'decorators/permission.decorator';
 import { WithOwner } from 'decorators/with-owner.decorator';
 import { PermissionsKeys } from 'modules/auth/permissions/permissions-keys.constants';
-import { User } from 'modules/auth/users/user.entity';
 import { FindOneParams } from 'modules/shared/dto/find-one.dto';
 import { Category } from './category.entity';
 import { CategoryService } from './category.service';

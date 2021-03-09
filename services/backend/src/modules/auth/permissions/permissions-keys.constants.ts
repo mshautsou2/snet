@@ -1,5 +1,4 @@
 export enum PermissionsKeys {
-  RegisterUser = 'RegisterUser',
   ViewSelfUser = 'ViewSelfUser',
   ViewAnyUser = 'ViewAnyUser',
   EditAnyUser = 'EditAnyUser',
@@ -13,9 +12,9 @@ export enum PermissionsKeys {
   EditAnyTopic = 'EditAnyTopic',
   EditSelfTopic = 'EditSelfTopic',
 
-  ViewSubTopic = 'ViewSubTopic',
-  EditAnySubTopic = 'EditAnySubtopic',
-  EditSelfSubTopic = 'EditSelfSubtopic',
+  ViewSubtopic = 'ViewSubtopic',
+  EditAnySubtopic = 'EditAnySubtopic',
+  EditSelfSubtopic = 'EditSelfSubtopic',
 
   ViewMessage = 'ViewMessages',
   EditAnyMessage = 'EditAnyMessage',

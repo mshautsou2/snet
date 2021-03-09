@@ -3,10 +3,9 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
-  Put,
+  Put
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'decorators/permission.decorator';
@@ -27,7 +26,6 @@ export class UserController {
   }
 
   @Post('login')
-  @HttpCode(200)
   async loginUser(@Body() userDto: UserLoginDto) {
     return await this.userService.loginUser(userDto);
   }
