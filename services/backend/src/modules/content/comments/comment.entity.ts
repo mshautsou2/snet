@@ -15,6 +15,7 @@ export class Comment extends BaseEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: string;
 
+  @ApiProperty({ required: true, type: 'string', name: 'messageId' })
   @ManyToOne(() => Message, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'message_id' })
   message: Message;

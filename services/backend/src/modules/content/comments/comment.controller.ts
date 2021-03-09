@@ -5,10 +5,11 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RequirePermissions } from 'decorators/permission.decorator';
+import { WithOwner } from 'decorators/with-owner.decorator';
 import { PermissionsKeys } from 'modules/auth/permissions/permissions-keys.constants';
 import { FindOneParams } from 'modules/shared/dto/find-one.dto';
 import { Comment } from './comment.entity';
@@ -20,8 +21,10 @@ export class CommentController {
   constructor(private readonly service: CommentService) {}
 
   @Post()
+  @WithOwner()
   @RequirePermissions(PermissionsKeys.EditSelfComment)
   public async create(@Body() body: Comment) {
+    this.transformRequestBody(body);
     return await this.service.createEntity(body);
   }
 
@@ -38,13 +41,15 @@ export class CommentController {
   }
 
   @Put('/:id')
+  @WithOwner()
   @RequirePermissions({
     anyEntityPermissions: [PermissionsKeys.EditAnyComment],
     ownEntityPermissions: [PermissionsKeys.EditSelfComment],
     entityClass: Comment,
   })
-  async update(@Param('id') entityId: string, @Body() comment: Comment) {
-    return await this.service.update(entityId, comment);
+  async update(@Param('id') entityId: string, @Body() body: Comment) {
+    this.transformRequestBody(body);
+    return await this.service.update(entityId, body);
   }
 
   @Delete('/:id')
@@ -55,5 +60,10 @@ export class CommentController {
   })
   public async delete(@Param('id') entityId: string) {
     return await this.service.removeEntity(entityId);
+  }
+
+  private transformRequestBody(body: Comment) {
+    body.message = (body as any).messageId;
+    delete (body as any).messageId;
   }
 }
