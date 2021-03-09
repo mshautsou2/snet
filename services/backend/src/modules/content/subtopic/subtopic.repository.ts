@@ -1,6 +1,7 @@
 import { ModelNotFoundError } from 'errors/entity-not-found.error';
 import { BaseCRUDRepository } from 'modules/shared/repositories/base-entity-repository';
-import { EntityRepository } from 'typeorm';
+import { EntityRepository, getConnection } from 'typeorm';
+import { Message } from '../messages/message.entity';
 import { Subtopic } from './subtopic.entity';
 
 @EntityRepository(Subtopic)
@@ -20,6 +21,19 @@ export class SubtopicRepository extends BaseCRUDRepository<Subtopic> {
     return this.fromPartial(result);
   }
 
+  async findMessagesAndComments(
+    subtopicId: string,
+    limit: number,
+  ): Promise<Message[]> {
+    return await getConnection()
+      .getRepository(Message)
+      .createQueryBuilder('message')
+      .where('message.subtopic.id = :subtopicId', { subtopicId })
+      .leftJoinAndSelect('message.comments', 'comment')
+      .addOrderBy('message.timestamp', 'DESC')
+      .limit(limit)
+      .getMany();
+  }
   protected throwNotFoundError(info: any) {
     throw new ModelNotFoundError('Subtopic', info);
   }
